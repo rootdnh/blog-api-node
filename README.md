@@ -1,4 +1,7 @@
-## If you use other OS remove the "sudo"
+# Steps to run 
+
+If you don't use linux OS remove the "sudo"
+
 
 * Create postgres image in docker 
 
