@@ -1,6 +1,5 @@
 import userModel from "../../db/models/userModel.js";
 import Joi from "joi";
-import { UniqueConstraintError } from "sequelize";
 
 class UserController {
  constructor() {
@@ -29,22 +28,23 @@ class UserController {
     return res.status(400).json({ msg: "Error in user input fields" });
    }
    const { name, email, password } = value;
+
+   const emailExists = await userModel.findOne({where: {email}});
+   
+   if(emailExists){
+    return res.status(409).json({msg: "This email already exists"})
+   }
+   
    const newUser = await userModel.create({
     name,
     email,
     password,
    });
-
+   
    res.status(201).send(newUser);
   } catch (error) {
-   if (error instanceof UniqueConstraintError) {
-    let path = error.errors[0].path;
-    console.error("Conflict when trying to create user in field: ", path);
-    return res.status(409).json({ msg: `Conflict on field ${path}` });
-   } else {
     console.error("Error when trying to create user", error);
-    return res.status(500).send("Error when trying to create user");
-   }
+    return res.status(500).json({msg: "Error when trying to create user"});
   }
  }
 }

@@ -1,9 +1,12 @@
 import express from "express";
-import dotenv from "dotenv/config";
+import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 import routes from "./routes/routes.js";
 import connection from "./db/connection.js";
+dotenv.config({
+  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env" 
+});
 
 class Server {
   constructor(){
