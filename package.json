@@ -6,13 +6,13 @@
   "type": "module",
   "scripts": {
     "test": "NODE_ENV=test jest",
+    "test-coverage": "NODE_ENV=test jest --coverage",
     "dev": "nodemon --exec babel-node src/startServer.js --ignore tests"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -20,7 +20,8 @@
     "joi": "^17.9.2",
     "pg": "^8.11.1",
     "sequelize": "^6.32.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "bcryptjs": "^2.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",

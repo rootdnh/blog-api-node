@@ -1,7 +1,8 @@
 import { Sequelize } from "sequelize";
 import config from "./config/config.js";
 
-const connection = new Sequelize(
+
+const databaseConnection = new Sequelize(
  config.database,
  config.username,
  config.password,
@@ -14,16 +15,4 @@ const connection = new Sequelize(
  }
 );
 
-try {
- (async () => {
-  await connection.authenticate();
-  console.log(
-   "Database connected at: ",
-   connection.options.host + ":" + connection.options.port
-  );
- })();
-} catch (error) {
- console.error("Something is wrong in database connection");
-}
-
-export default connection;
+export default databaseConnection;

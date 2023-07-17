@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
-import connection from "../connection.js";
+import databaseConnection from "../connection.js";
 import {v4 as uuidv4} from "uuid";
 
-const userModel = connection.define('users', {
+const userModel = databaseConnection.define('users', {
   id: {
     type: DataTypes.UUID,
     defaultValue: ()=> uuidv4(),
