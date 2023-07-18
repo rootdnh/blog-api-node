@@ -1,7 +1,8 @@
-import UserRepository from "../../repositories/userRepository.js";
+import UserRepository from "../repositories/userRepository.js";
 import Joi from "joi";
 
 class UserController {
+  
  create(req, res) {
   const schema = Joi.object({
    name: Joi.string().required(),

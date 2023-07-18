@@ -1,6 +1,8 @@
 import { Router } from "express";
 import auth from "./middlewares/auth.js";
-import UserController from "../controllers/userController/userController.js";
+import UserController from "../controllers/userController.js";
+import categoryController from "../controllers/categoryController.js";
+import postController from "../controllers/postController.js";
 const routes = new Router();
 
 routes.get("*", auth);
