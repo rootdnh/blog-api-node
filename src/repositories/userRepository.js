@@ -17,8 +17,8 @@ class UserRepository {
 
  async hashPassword(password) {
   try {
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
+    const cost = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, cost);
     return hash;
   } catch (error) {
    console.error("Error when trying to hash a password", error);
@@ -49,6 +49,21 @@ class UserRepository {
    throw new HandleError("Error when trying to create user", 500);
   }
  }
+
+ async delete(id){
+  try {
+    const response = await userModel.destroy({where: {id}});
+    if(response) return response;
+    } catch (error) {
+    console.log(error);
+    throw new Error("User not found", 400)
+  }
+ }
+
+ async login(password){
+  
+ }
+
 }
 
 export default new UserRepository();
