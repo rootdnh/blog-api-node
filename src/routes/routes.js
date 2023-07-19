@@ -1,8 +1,8 @@
 import { Router } from "express";
 import auth from "./middlewares/auth.js";
 import UserController from "../controllers/userController.js";
-import categoryController from "../controllers/categoryController.js";
-import postController from "../controllers/postController.js";
+import CategoryController from "../controllers/categoryController.js";
+import PostController from "../controllers/postController.js";
 const routes = new Router();
 
 routes.get("*", auth);
@@ -14,5 +14,9 @@ routes.get("/", (req, res) => {
 routes.post("/create-user", UserController.create);
 
 routes.delete("/delete-user/:id", UserController.delete);
+
+routes.post("/create-categoty", CategoryController.create);
+
+routes.post("/create-post", PostController.create);
 
 export default routes;

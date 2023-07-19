@@ -6,7 +6,8 @@ const userModel = databaseConnection.define('users', {
   id: {
     type: DataTypes.UUID,
     defaultValue: ()=> uuidv4(),
-    primaryKey: true
+    primaryKey: true,
+    unique: true
   },
   name: {
     type: DataTypes.STRING,

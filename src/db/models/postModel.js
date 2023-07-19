@@ -7,7 +7,8 @@ const postModel = databaseConnection.define("posts", {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    unique: true
   },
   title: {
     type: DataTypes.STRING,

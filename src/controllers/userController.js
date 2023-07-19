@@ -13,7 +13,7 @@ class UserController {
   const { error, value } = schema.validate(req.body);
 
   if (error) {
-   console.log("Error in user input fields", error);
+   console.error("Error in user input fields", error);
    return res.status(400).json({ msg: "Error in user input fields" });
   }
 
@@ -23,7 +23,7 @@ class UserController {
     return res.status(201).json(response);
    })
    .catch((error) => {
-    console.log(error);
+    console.error(error);
     return res.status(error.statusCode).json({ msg: error.message });
    });
  }
@@ -49,7 +49,7 @@ class UserController {
      })
    )
    .catch((error) => {
-    console.log(error);
+    console.error(error);
     return res.status(400).json({ msg: error.message });
    });
  }

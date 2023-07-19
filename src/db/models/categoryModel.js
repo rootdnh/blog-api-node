@@ -8,7 +8,8 @@ const categoryModel = databaseConnection.define("category",{
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
+    unique: true
   },
   name: {
     type: DataTypes.STRING,
@@ -21,7 +22,7 @@ postModel.belongsTo(categoryModel, {
   foreignKey: "idCategory"
 });
 
-categoryModel.hasMany(userModel, {
+categoryModel.hasMany(postModel, {
   foreignKey: "idCategory"
 })
 

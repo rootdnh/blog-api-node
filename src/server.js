@@ -37,6 +37,7 @@ class Server {
       if(error instanceof HandleError){
         return res.status(error.statusCode).json(error.message);
       }
+      console.error(error);
       res.status(500).json({msg: "Internal server error"});
     })
   }
