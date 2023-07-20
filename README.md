@@ -19,3 +19,9 @@ sudo docker run --name blog-api-node \
 sudo docker exec -it blog-api-node psql -U blog-api-user -d blog-api
 
 ```
+* To start the docker image (just in linux rsrs)
+```
+./docker_start.sh
+
+```
+
