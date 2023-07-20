@@ -31,24 +31,23 @@ class UserRepository {
   try {
    const { name, email } = user;
    const pass = user.password;
-   
+
    const emailExists = await userModel.findOne({ where: { email } });
 
    if (emailExists) throw new HandleError("This email already exists", 409);
 
    const password = await this.hashPassword(pass);
-   
-   if (!password) throw new HandleError("Internal server error", 500);
 
-   const token = JwUtil.generate({name, email})
+   if (!password) throw new HandleError("Internal server error", 500);
 
    const newUser = await userModel.create({
     name,
     email,
     password,
    });
-
-   return {...newUser.dataValues, token};
+   const id = newUser.dataValues.id;
+   const token = JwUtil.generate({ id, email });
+   return { ...newUser.dataValues, token };
   } catch (error) {
    if (error instanceof HandleError)
     throw new HandleError(error.message, error.statusCode);
@@ -68,9 +67,21 @@ class UserRepository {
 
  async login(email, password) {
   try {
-    
+   const user = await userModel.findOne({ where: { email } });
+  
+   if (!user) throw new HandleError("Email doesn't exists", 400);
+
+   if (await bcrypt.compare(password, user.password)) {
+    const token = JwUtil.generate({ id: user.id, email: user.email });
+    const response = { id: user.id, email: user.email, token };
+    return response;
+   }
+
+   throw new HandleError("Passwords don't match", 400);
   } catch (error) {
-    
+   if (error instanceof HandleError)
+    throw new HandleError(error.message, error.statusCode);
+   throw new HandleError("Error when trying to login a user", 500);
   }
  }
 }

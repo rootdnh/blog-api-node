@@ -19,4 +19,6 @@ routes.post("/create-categoty", CategoryController.create);
 
 routes.post("/create-post", PostController.create);
 
+routes.post("/login", UserController.login);
+
 export default routes;
