@@ -1,7 +1,7 @@
 import userModel from "../db/models/userModel.js";
 import bcrypt from "bcryptjs";
 import HandleError from "../error/handleError.js";
-import JwUtil from "../utils/JwUtil.js";
+import JwtUtil from "../utils/JwtUtil.js";
 
 class UserRepository {
  constructor() {
@@ -46,7 +46,7 @@ class UserRepository {
     password,
    });
    const id = newUser.dataValues.id;
-   const token = JwUtil.generate({ id, email });
+   const token = JwtUtil.generate({ id, email });
    return { ...newUser.dataValues, token };
   } catch (error) {
    if (error instanceof HandleError)
@@ -66,19 +66,22 @@ class UserRepository {
  }
 
  async login(email, password) {
+  
   try {
    const user = await userModel.findOne({ where: { email } });
   
-   if (!user) throw new HandleError("Email doesn't exists", 400);
+   if (!user) throw new HandleError("Email or password is wrong", 400);
 
    if (await bcrypt.compare(password, user.password)) {
-    const token = JwUtil.generate({ id: user.id, email: user.email });
-    const response = { id: user.id, email: user.email, token };
-    return response;
+    const token = JwtUtil.generate({ id: user.id, email: user.email });
+      if(!token) throw new Error;
+      const response = { id: user.id, email: user.email, token };
+      return response;
    }
 
-   throw new HandleError("Passwords don't match", 400);
+   throw new HandleError("Email or password is wrong", 400);
   } catch (error) {
+    console.error(error)
    if (error instanceof HandleError)
     throw new HandleError(error.message, error.statusCode);
    throw new HandleError("Error when trying to login a user", 500);

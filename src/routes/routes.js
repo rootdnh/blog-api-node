@@ -1,15 +1,24 @@
 import { Router } from "express";
-import auth from "./middlewares/auth.js";
 import UserController from "../controllers/userController.js";
 import CategoryController from "../controllers/categoryController.js";
 import PostController from "../controllers/postController.js";
 const routes = new Router();
+import auth from "./middlewares/auth.js";
 
-routes.get("*", auth);
 
-routes.get("/", (req, res) => {
- res.status(200).send("hello");
-});
+
+
+routes.post("/login", UserController.login);
+
+routes.get("/get-all", (req, res)=>{
+  res.send("before autentication")
+})
+
+routes.use(auth.verify);
+
+routes.get("/get-end", (req, res)=>{
+  res.send("after autentication")
+})
 
 routes.post("/create-user", UserController.create);
 
@@ -19,6 +28,6 @@ routes.post("/create-categoty", CategoryController.create);
 
 routes.post("/create-post", PostController.create);
 
-routes.post("/login", UserController.login);
+
 
 export default routes;

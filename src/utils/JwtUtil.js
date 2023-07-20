@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import HandleError from "../error/handleError.js";
 
 class JwtUtil {
  constructor() {
@@ -8,7 +7,12 @@ class JwtUtil {
  }
 
  generate(payload) {
-  return jwt.sign(payload, this.secret, { expiresIn: this.expiresTokenIn });
+  try {
+    return jwt.sign(payload, this.secret, { expiresIn: this.expiresTokenIn });
+  } catch (error) {
+    console.error(error)
+    return null;
+  }
  }
 
  verify(token) {
@@ -19,13 +23,6 @@ class JwtUtil {
    return null;
   }
  }
-
- compare(token) {
-  try {
-   return jwt.verify(token, this.secret);
-  } catch (error) {
-   throw new HandleError("Invalid Token", 400);
-  }
- }
+ 
 }
 export default new JwtUtil();

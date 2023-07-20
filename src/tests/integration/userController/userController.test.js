@@ -5,7 +5,7 @@ import server from "../../../server";
 import bcrypt from "bcryptjs";
 import userRepository from "../../../repositories/userRepository";
 import userController from "../../../controllers/userController";
-import JwtUtil  from "../../../utils/JwUtil";
+import JwtUtil  from "../../../utils/JwtUtil.js";
 
 const mockUser = {
   name: "Teste",
