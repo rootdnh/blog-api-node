@@ -1,6 +1,7 @@
 import userModel from "../db/models/userModel.js";
 import bcrypt from "bcryptjs";
 import HandleError from "../error/handleError.js";
+import JwUtil from "../utils/JwUtil.js";
 
 class UserRepository {
  constructor() {
@@ -39,13 +40,15 @@ class UserRepository {
    
    if (!password) throw new HandleError("Internal server error", 500);
 
+   const token = JwUtil.generate({name, email})
+
    const newUser = await userModel.create({
     name,
     email,
     password,
    });
 
-   return newUser;
+   return {...newUser.dataValues, token};
   } catch (error) {
    if (error instanceof HandleError)
     throw new HandleError(error.message, error.statusCode);
@@ -63,7 +66,13 @@ class UserRepository {
   }
  }
 
- async login(password) {}
+ async login(email, password) {
+  try {
+    
+  } catch (error) {
+    
+  }
+ }
 }
 
 export default new UserRepository();

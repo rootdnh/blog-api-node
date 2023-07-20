@@ -19,8 +19,8 @@ class UserController {
 
   UserRepository.create(value)
    .then((newUser) => {
-    const { password, ...response } = newUser.dataValues;
-    return res.status(201).json(response);
+    const { password, ...response } = newUser;
+    return res.status(201).json({response});
    })
    .catch((error) => {
     console.error(error);
@@ -45,7 +45,7 @@ class UserController {
      .json({
       msg: "User has been deleted successfully",
       id: response.id,
-      email: response.email,
+      email: response.email
      })
    )
    .catch((error) => {
