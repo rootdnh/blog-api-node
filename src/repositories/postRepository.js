@@ -19,14 +19,14 @@ class PostRepository {
  }
 
  async create(post) {
-
   try {
    const { title, content, idUser, idCategory } = post;
 
    const userExists = await userModel.findByPk(idUser);
    const categoryExists = await categoryModel.findByPk(idCategory);
 
-   if (!userExists || !categoryExists) throw new HandleError("User or category doesn't exists", 400);
+   if (!userExists || !categoryExists)
+    throw new HandleError("User or category doesn't exists", 400);
 
    const titleExist = await postModel.findOne({
     where: {
@@ -36,7 +36,8 @@ class PostRepository {
     },
    });
 
-   if (titleExist) throw new HandleError("The title has already been created", 400);
+   if (titleExist)
+    throw new HandleError("The title has already been created", 400);
 
    const response = await postModel.create({
     title,
@@ -47,8 +48,22 @@ class PostRepository {
 
    return response;
   } catch (error) {
-   if (error instanceof HandleError) throw new HandleError(error.message, error.statusCode);
+   if (error instanceof HandleError)
+    throw new HandleError(error.message, error.statusCode);
    throw new HandleError("Error when trying to create a post", 500);
+  }
+ }
+
+ async delete(id) {
+  try {
+   const postExists = await postModel.destroy({ where: { id } });
+   if (!postExists) throw new HandleError("Post not found", 400);
+   return {msg: "Post has been deleted successfully", id};
+   
+  } catch (error) {
+   if (error instanceof HandleError)
+    throw new HandleError(error.message, error.statusCode);
+   throw new HandleError("Error when trying to delete a user", 500);
   }
  }
 }

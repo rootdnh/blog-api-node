@@ -6,15 +6,11 @@ const routes = new Router();
 import auth from "./middlewares/auth.js";
 
 
-
-
 routes.post("/login", UserController.login);
 
-routes.get("/get-all", (req, res)=>{
-  res.send("before autentication")
-})
-
 routes.use(auth.verify);
+
+routes.delete("/delete-post/:id", PostController.delete);
 
 routes.get("/get-end", (req, res)=>{
   res.send("after autentication")
