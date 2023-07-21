@@ -1,7 +1,6 @@
 import databaseConnection from "../connection.js";
 import { DataTypes } from "sequelize";
 import postModel from "./postModel.js";
-import userModel from "./userModel.js";
 
 const categoryModel = databaseConnection.define("category",{
   id: {

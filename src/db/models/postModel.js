@@ -3,7 +3,7 @@ import { DataTypes } from "sequelize";
 import userModel from "./userModel.js";
 
 const postModel = databaseConnection.define("posts", {
-  id :{
+  id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,

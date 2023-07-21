@@ -1,5 +1,5 @@
 class HandleError {
-  constructor(message = "", statusCode = 0){
+  constructor(message = "", statusCode = 500){
     this.message = message;
     this.statusCode = statusCode;
   }

@@ -13,16 +13,18 @@ routes.use(auth.verify);
 routes.delete("/delete-post/:id", PostController.delete);
 
 routes.get("/get-end", (req, res)=>{
-  res.send("after autentication")
+  res.send("after authentication")
 })
 
 routes.post("/create-user", UserController.create);
 
 routes.delete("/delete-user/:id", UserController.delete);
 
-routes.post("/create-categoty", CategoryController.create);
+routes.post("/create-category", CategoryController.create);
 
 routes.post("/create-post", PostController.create);
+
+routes.put("/update-post", PostController.update);
 
 
 

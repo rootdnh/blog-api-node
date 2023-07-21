@@ -32,10 +32,11 @@ class Server {
     this.server.use(bodyParser.json());
     this.server.use(cors({origin: "*"}))
   }
+  
   ErrorHandler() {
     this.server.use((error, req, res, next)=>{
       if(error instanceof HandleError){
-        return res.status(error.statusCode).json(error.message);
+        return res.status(error.statusCode).json({msg: error.message});
       }
       console.error(error);
       res.status(500).json({msg: "Internal server error"});

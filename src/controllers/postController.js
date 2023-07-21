@@ -2,6 +2,7 @@ import Joi from "joi";
 import PostRepository from "../repositories/postRepository.js";
 
 class PostController {
+
  create(req, res) {
   const schema = Joi.object({
    title: Joi.string().required(),
@@ -28,7 +29,6 @@ class PostController {
      .json({ msg: "Post has been created successfully", response });
    })
    .catch((error) => {
-    console.error(error);
     return res.status(error.statusCode).json({ msg: error.message });
    });
  }
@@ -45,9 +45,28 @@ class PostController {
   PostRepository.delete(id)
    .then((data) => res.status(200).json(data))
    .catch((error) => {
-    console.log(error);
     return res.status(error.statusCode).json({ msg: error.message });
    });
+ }
+
+ update(req, res) {
+  const schema = Joi.object({
+    id: Joi.number().required(),
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+    idUser: Joi.string().required(), 
+    idCategory: Joi.number().required()
+  });
+
+  const {error, value} = schema.validate(req.body);
+  if(error) return res.status(400).json({msg: "Post field format error"});
+  
+  PostRepository.update(value)
+  .then((response)=> res.status(201).json({msg: "Post has been updated successfully", response}))
+  .catch((error)=>{
+    return res.status(error.statusCode).json({msg: error.message});
+  })
+
  }
 }
 
