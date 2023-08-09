@@ -5,6 +5,7 @@ import cors from "cors";
 import routes from "./routes/routes.js";
 import HandleError from "./error/handleError.js";
 import databaseConnection from "./db/connection.js";
+import {MulterError} from "multer";
 dotenv.config({
   path: process.env.NODE_ENV === "test" ? ".env.test" : ".env" 
 });
@@ -37,6 +38,9 @@ class Server {
     this.server.use((error, req, res, next)=>{
       if(error instanceof HandleError){
         return res.status(error.statusCode).json({msg: error.message});
+      }
+      if(error instanceof MulterError){
+        return res.status(400).json({msg: `${error.message}, the limit is ${(process.env.AVATAR_SIZE / 1024) }kb`});
       }
       console.error(error);
       res.status(500).json({msg: "Internal server error"});

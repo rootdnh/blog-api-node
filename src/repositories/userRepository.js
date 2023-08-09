@@ -2,6 +2,7 @@ import userModel from "../db/models/userModel.js";
 import bcrypt from "bcryptjs";
 import HandleError from "../error/handleError.js";
 import JwtUtil from "../utils/JwtUtil.js";
+import {avatarModel} from "../db/models/avatarModel.js";
 
 class UserRepository {
  constructor() {
@@ -11,6 +12,7 @@ class UserRepository {
  async initialize() {
   try {
    await userModel.sync();
+   await avatarModel.sync();
   } catch (error) {
    console.error("Error syncing user template:", error);
   }
@@ -27,11 +29,10 @@ class UserRepository {
   }
  }
 
- async create(user) {
+ async create(user, avatar) {
   try {
    const { name, email } = user;
    const pass = user.password;
-
    const emailExists = await userModel.findOne({ where: { email } });
 
    if (emailExists) throw new HandleError("This email already exists", 409);
@@ -45,9 +46,21 @@ class UserRepository {
     email,
     password,
    });
+
    const id = newUser.dataValues.id;
    const token = JwtUtil.generate({ id, email });
-   return { ...newUser.dataValues, token };
+
+   const {filename, originalname, size, path} = avatar;
+   
+   const newAvatar = await avatarModel.create({
+    originalName: originalname,
+    url: path,
+    size,
+    hashedName: filename,
+    idUser: id
+   });
+
+   return { ...newUser.dataValues, token, newAvatar };
   } catch (error) {
    if (error instanceof HandleError)
     throw new HandleError(error.message, error.statusCode);
@@ -65,6 +78,17 @@ class UserRepository {
   }
  }
 
+ async getAll(){
+  try {
+    const arrUsers = await userModel.findAll({
+      include: [avatarModel]
+    });
+    return arrUsers;
+  } catch (error) {
+    console.log(error);
+    throw new HandleError("Error when trying to get all users", 500)
+  }
+}
  async login(email, password) {
   
   try {

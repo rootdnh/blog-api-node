@@ -1,3 +1,4 @@
+import userRepository from "../repositories/userRepository.js";
 import UserRepository from "../repositories/userRepository.js";
 import Joi from "joi";
 
@@ -17,7 +18,11 @@ class UserController {
    return res.status(400).json({ msg: "Error in user input fields" });
   }
 
-  UserRepository.create(value)
+  const avatar = req.file;
+
+  if(!avatar) return res.status(400).json({msg: "Avatar pic is empty"});
+
+  UserRepository.create(value, avatar)
    .then((newUser) => {
     const { password, ...response } = newUser;
     return res.status(201).json({ response });
@@ -70,6 +75,16 @@ class UserController {
     console.error(error);
     return res.status(error.statusCode).json({ msg: error.message });
    });
+ }
+
+ getAll(req, res){
+  userRepository.getAll()
+  .then((data)=>{
+    res.status(200).json({msg: data});
+  })
+  .catch((error)=>{
+    res.status(error.statusCode).json({msg: error.message})
+  });
  }
 }
 
