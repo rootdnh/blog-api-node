@@ -72,7 +72,6 @@ class UserController {
   UserRepository.login(email, password)
    .then((response) => res.status(200).json(response))
    .catch((error) => {
-    console.error(error);
     return res.status(error.statusCode).json({ msg: error.message });
    });
  }

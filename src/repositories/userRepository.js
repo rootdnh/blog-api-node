@@ -92,14 +92,14 @@ class UserRepository {
  async login(email, password) {
   
   try {
-   const user = await userModel.findOne({ where: { email } });
+   const user = await userModel.findOne({ where: { email }, include: [avatarModel] });
   
    if (!user) throw new HandleError("Email or password is wrong", 400);
 
    if (await bcrypt.compare(password, user.password)) {
     const token = JwtUtil.generate({ id: user.id, email: user.email });
       if(!token) throw new Error;
-      const response = { id: user.id, email: user.email, token };
+      const response = { id: user.id, email: user.email, token, avatar: user.avatar };
       return response;
    }
 
