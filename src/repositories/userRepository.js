@@ -54,7 +54,7 @@ class UserRepository {
    
    const newAvatar = await avatarModel.create({
     originalName: originalname,
-    url: path,
+    url: `/uploads/${filename}`,
     size,
     hashedName: filename,
     idUser: id

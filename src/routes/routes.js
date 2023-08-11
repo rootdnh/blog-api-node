@@ -5,8 +5,16 @@ import PostController from "../controllers/postController.js";
 const routes = new Router();
 import auth from "./middlewares/auth.js";
 import {upload} from "../utils/multerConfig.js";
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 routes.post("/login", UserController.login);
+
+routes.use('/uploads', express.static(path.join(__dirname, "../uploads")));
 
 routes.use(auth.verify);
 
