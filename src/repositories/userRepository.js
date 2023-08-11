@@ -50,7 +50,7 @@ class UserRepository {
    const id = newUser.dataValues.id;
    const token = JwtUtil.generate({ id, email });
 
-   const {filename, originalname, size, path} = avatar;
+   const {filename, originalname, size} = avatar;
    
    const newAvatar = await avatarModel.create({
     originalName: originalname,
