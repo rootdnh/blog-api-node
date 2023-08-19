@@ -38,6 +38,17 @@ class CategoryRepository {
    throw new HandleError("Error when trying to create a category", 500);
   }
  }
+
+ async getAll(){
+  try {
+    const response = await categoryModel.findAll();
+    if(response) return response;
+  } catch (error) {
+    console.error(error);
+    throw new HandleError("Error when trying to get categories", 500);
+  }
+ }
+
 }
 
 export default new CategoryRepository();

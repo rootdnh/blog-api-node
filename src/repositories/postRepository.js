@@ -108,6 +108,16 @@ class PostRepository {
    throw new HandleError("Error when trying to update a post", 500);
   }
  }
+
+ async getAll(){
+  try {
+    const response = await postModel.findAll({include: [categoryModel]});
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw new HandleError("500", "Error when trying to get all posts");
+  }
+ }
 }
 
 export default new PostRepository();

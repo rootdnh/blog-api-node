@@ -3,7 +3,7 @@ import CategoryRepository from "../repositories/categoryRepository.js";
 
 class CategoryController {
   
-  async create(req, res){
+  create(req, res){
     const schema = Joi.object({
       category: Joi.string().required()
     })
@@ -12,7 +12,7 @@ class CategoryController {
     if(error) res.status(400).json({msg: "Something wrong with the category field"})
     const {category} = value;
 
-    await CategoryRepository.create(category)
+    CategoryRepository.create(category)
     .then(response => 
       res
       .status(201)
@@ -20,6 +20,16 @@ class CategoryController {
     .catch((error)=>{
       console.error(error)
       return res.status(error.statusCode).json({msg: error.message});
+    })
+  }
+  
+  getAll(req, res){
+    CategoryRepository.getAll()
+    .then((data)=>{
+      res.status(200).json({data});
+    })
+    .catch((error)=>{
+      res.status(error.statusCode).json({msg: error.message});
     })
   }
 }

@@ -13,7 +13,7 @@ class PostController {
 
   const { error, value } = schema.validate(req.body);
 
-  if (error) res.status(400).json({ msg: "Error in post fields" });
+  if (error) return res.status(400).json({ msg: "Error in post fields" });
 
   const { title, content, idUser, idCategory } = value;
 
@@ -67,6 +67,16 @@ class PostController {
     return res.status(error.statusCode).json({msg: error.message});
   })
 
+ }
+
+ getAll(req, res) {
+  PostRepository.getAll()
+  .then((data)=>{
+    res.status(200).json({msg: data});
+  })
+  .catch((error)=>{
+    res.status(error.statusCode).json({msg: error.message});
+  });
  }
 }
 

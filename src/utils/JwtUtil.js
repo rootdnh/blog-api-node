@@ -8,7 +8,8 @@ class JwtUtil {
 
  generate(payload) {
   try {
-    return jwt.sign(payload, this.secret, { expiresIn: this.expiresTokenIn });
+    const token =  jwt.sign(payload, this.secret, { expiresIn: this.expiresTokenIn });
+    return token || null  
   } catch (error) {
     console.error(error)
     return null;
