@@ -18,7 +18,8 @@ class JwtUtil {
 
  verify(token) {
   try {
-   return jwt.verify(token, this.secret);
+   const isValid = jwt.verify(token, this.secret);
+   return !!isValid
   } catch (error) {
    console.error(error);
    return null;

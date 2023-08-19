@@ -21,6 +21,8 @@ routes.get("/get-categories", CategoryController.getAll);
 
 routes.use(auth.verify);
 
+routes.get("/auth-verify", (_, res)=> res.status(200).json({response: true}));
+
 routes.delete("/delete-post/:id", PostController.delete);
 
 routes.post("/create-user", upload.single("avatar"), UserController.create);
