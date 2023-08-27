@@ -6,9 +6,8 @@ import routes from "./routes/routes.js";
 import HandleError from "./error/handleError.js";
 import databaseConnection from "./db/connection.js";
 import {MulterError} from "multer";
-import path from "path";
 dotenv.config({
-  path: process.env.NODE_ENV === "test" ? ".env.test" : ".env" 
+  path: process.env.NODE_ENV === "dev" ? ".env.dev" : ".env" 
 });
 
 class Server {

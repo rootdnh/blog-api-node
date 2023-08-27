@@ -54,7 +54,7 @@ class UserRepository {
    
    const newAvatar = await avatarModel.create({
     originalName: originalname,
-    url: `/uploads/${filename}`,
+    url: filename,
     size,
     hashedName: filename,
     idUser: id
@@ -73,7 +73,6 @@ class UserRepository {
    const response = await userModel.destroy({ where: { id } });
    if (response) return response;
   } catch (error) {
-   console.error(error);
    throw new Error("User not found", 400);
   }
  }
@@ -105,10 +104,8 @@ class UserRepository {
 
    throw new HandleError("Email or password is wrong", 400);
   } catch (error) {
-    console.error(error)
-   if (error instanceof HandleError)
-    throw new HandleError(error.message, error.statusCode);
-   throw new HandleError("Error when trying to login a user", 500);
+   if (error instanceof HandleError) throw error;
+   throw new HandleError("Error when trying to login a user", 500, error);
   }
  }
 }

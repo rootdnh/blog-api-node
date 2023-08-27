@@ -3,7 +3,7 @@
 If you don't use linux OS remove the "sudo"
 
 
-* Create postgres image in docker 
+* Create postgres image in docker (duplicate this for dev version)
 
 ```
 sudo docker run --name blog-api-node \
@@ -12,6 +12,17 @@ sudo docker run --name blog-api-node \
 -e POSTGRES_DB=blog-api \
 -p 5432:5432 \
 -d postgres
+```
+
+* Dev version (written here to help)
+
+```
+sudo docker run --name blog-api-dev \
+-e POSTGRES_USER=blog-api-dev \
+-e POSTGRES_PASSWORD=mysecretpass \ 
+-e POSTGRES_DB=blog-api-dev \
+-p 5433:5432 \
+ -d postgres
 ```
 
 * You can test the connection by doing it: 

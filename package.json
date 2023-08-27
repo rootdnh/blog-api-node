@@ -5,9 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=dev jest",
     "test-coverage": "NODE_ENV=test jest --coverage",
-    "dev": "nodemon --exec babel-node src/startServer.js --ignore tests"
+    "dev": "NODE_ENV=dev nodemon --exec babel-node src/startServer.js --ignore tests",
+    "prod": "NODE_ENV=prod nodemon --exec babel-node src/startServer.js --ignore tests"
   },
   "keywords": [],
   "author": "",
