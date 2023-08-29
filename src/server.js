@@ -1,17 +1,20 @@
-import express from "express";
 import dotenv from "dotenv";
+dotenv.config({
+  path: process.env.NODE_ENV === "dev" ? ".env.dev" : ".env" 
+});
+import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import routes from "./routes/routes.js";
 import HandleError from "./error/handleError.js";
 import databaseConnection from "./db/connection.js";
 import {MulterError} from "multer";
-dotenv.config({
-  path: process.env.NODE_ENV === "dev" ? ".env.dev" : ".env" 
-});
+import logger from "./logger/pinoConfig.js";
+import PinoHttp from "pino-http";
 
 class Server {
   constructor(){
+    logger.info("Server is running!")
     this.server = express();
     this.middlewares();
     this.connection();
@@ -30,6 +33,7 @@ class Server {
   }
 
   middlewares(){
+    this.server.use(PinoHttp({logger}))
     this.server.use(bodyParser.json());
     this.server.use(cors({origin: "*"}))
   }
