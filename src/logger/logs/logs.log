@@ -1,0 +1,25 @@
+{"level":30,"time":1693422658970,"pid":95739,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693422669572,"pid":95841,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693422686598,"pid":95949,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693422801802,"pid":96142,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693423008016,"pid":96375,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693424636625,"pid":107158,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693424676954,"pid":107363,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693424981951,"pid":107907,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693424999725,"pid":108035,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693425968075,"pid":111735,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693425982872,"pid":111871,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426052975,"pid":112095,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426085018,"pid":112232,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426096543,"pid":112341,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426129030,"pid":112479,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426147121,"pid":112590,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426312870,"pid":112842,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426327816,"pid":112954,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426449676,"pid":112954,"hostname":"dnh-webdev","req":{"id":1,"method":"GET","url":"/get-users","query":{},"params":{},"headers":{"authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhYjkyY2Y3LWQzZDMtNGJiNC1hMGM5LTdkNjBkNDBjMzdmYyIsImVtYWlsIjoiYXZhdGFyQGdtYWlsLmNvbSIsImlhdCI6MTY5MzA5OTE0NSwiZXhwIjoxNjkzNzgzMTQ1fQ.dqjdOIPk6-E_wCbns_9f_B1y5AxnHsjQkUNPXXnK8G8","user-agent":"PostmanRuntime/7.29.3","accept":"*/*","postman-token":"1004c193-b9b3-4fc2-b355-6f1d39f120bc","host":"localhost:5000","accept-encoding":"gzip, deflate, br","connection":"keep-alive"},"remoteAddress":"::1","remotePort":51030},"res":{"statusCode":200,"headers":{"x-powered-by":"Express","access-control-allow-origin":"*","content-type":"application/json; charset=utf-8","content-length":"510","etag":"W/\"1fe-wu0Q4MlOy55S4y22WhN4pbtFGHc\""}},"responseTime":179,"msg":"request completed"}
+{"level":30,"time":1693426686494,"pid":113446,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426702830,"pid":113560,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426708054,"pid":113633,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426818005,"pid":113822,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426867043,"pid":113955,"hostname":"dnh-webdev","msg":"Server is running!"}
+{"level":30,"time":1693426883611,"pid":114068,"hostname":"dnh-webdev","msg":"Server is running!"}

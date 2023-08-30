@@ -9,7 +9,7 @@ import routes from "./routes/routes.js";
 import HandleError from "./error/handleError.js";
 import databaseConnection from "./db/connection.js";
 import {MulterError} from "multer";
-import logger from "./logger/pinoConfig.js";
+import logger from "./logger/loggerConfig.js";
 import PinoHttp from "pino-http";
 
 class Server {
