@@ -36,9 +36,8 @@ const logger = pino({
      destination: logFilePath,
      translateTime: "SYS:standard",
     },
-   },
-  ],
- 
+   }
+  ]
  },
 });
 
