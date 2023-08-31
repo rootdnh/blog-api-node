@@ -24,11 +24,17 @@ class Server {
   async connection(){
    try{
     await databaseConnection.authenticate();
-    logger.info(`Database connected at: ${databaseConnection.options.host}:${databaseConnection.options.port}` )
-    console.log("Database connected at: ", databaseConnection.options.host + ":" +
-    databaseConnection.options.port);
+    const databaseConnectionInfo = {
+      host: databaseConnection.options.host,
+      port: databaseConnection.options.port
+    }
+    let message = `Database connected at: ${databaseConnectionInfo.host}:${databaseConnectionInfo.port}`
+    logger.info(message);
+    console.log("\x1b[33m", message);
    }catch (error) {
-    console.error("Something is wrong in database connection");
+    let message = `Something is wrong in database connection ${error}`;
+    logger.fatal(message);
+    console.error(message);
    }
   }
 
@@ -40,13 +46,15 @@ class Server {
   
   ErrorHandler() {
     this.server.use((error, req, res, next)=>{
+
       if(error instanceof HandleError){
         return res.status(error.statusCode).json({msg: error.message});
       }
       if(error instanceof MulterError){
+        logger.warn(`Error in multer, ${error}`)
         return res.status(400).json({msg: `${error.message}, the limit is ${(process.env.AVATAR_SIZE / 1024) }kb`});
       }
-      console.error(error);
+      logger.fatal(`Internal server error, ${error}`);
       res.status(500).json({msg: "Internal server error"});
     })
   }

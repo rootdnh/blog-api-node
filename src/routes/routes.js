@@ -16,7 +16,8 @@ routes.post("/login", UserController.login);
 
 routes.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
-routes.get("/get-categories", CategoryController.getAll);
+routes.get("/get-categories", (req, res)=> {
+  throw new Error("fatallll") })//CategoryController.getAll);
 
 routes.use(auth.verify);
 
