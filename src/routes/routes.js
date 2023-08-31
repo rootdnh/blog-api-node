@@ -6,11 +6,10 @@ const routes = new Router();
 import express from "express";
 import auth from "./middlewares/auth.js";
 import {upload} from "../utils/multerConfig.js";
-import path from "path";
+import path, {dirname} from "path";
 import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 routes.post("/login", UserController.login);
 

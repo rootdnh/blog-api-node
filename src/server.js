@@ -14,7 +14,6 @@ import PinoHttp from "pino-http";
 
 class Server {
   constructor(){
-    logger.info("Server is running!")
     this.server = express();
     this.middlewares();
     this.connection();
@@ -25,6 +24,7 @@ class Server {
   async connection(){
    try{
     await databaseConnection.authenticate();
+    logger.info(`Database connected at: ${databaseConnection.options.host}:${databaseConnection.options.port}` )
     console.log("Database connected at: ", databaseConnection.options.host + ":" +
     databaseConnection.options.port);
    }catch (error) {

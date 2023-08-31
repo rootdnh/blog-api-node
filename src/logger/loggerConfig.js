@@ -1,5 +1,4 @@
 import pino, { destination } from "pino";
-import pinoPretty from "pino-pretty";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
@@ -20,24 +19,33 @@ const pretty = {
 
 const logger = pino({
  level: "info",
+ base: false,
+ timestamp: () =>
+  `, "time":"${new Date(Date.now()).toLocaleString("pt-BR", {
+   hour: "2-digit",
+   minute: "2-digit",
+   second: "2-digit",
+   day: "2-digit",
+   month: "2-digit",
+   year: "numeric",
+  })}"`,
  transport: {
   targets: [
    {
-    level: "info",
+    level: "warn",
     target: "pino-pretty",
     options: {
      ...pretty,
     },
    },
    {
-    level: "trace",
+    level: "info",
     target: "pino/file",
     options: {
      destination: logFilePath,
-     translateTime: "SYS:standard",
     },
-   }
-  ]
+   },
+  ],
  },
 });
 

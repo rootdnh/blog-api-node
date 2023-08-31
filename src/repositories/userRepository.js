@@ -72,8 +72,10 @@ class UserRepository {
   try {
    const response = await userModel.destroy({ where: { id } });
    if (response) return response;
+   throw new HandleError("Id not found", 404);
   } catch (error) {
-   throw new Error("User not found", 400);
+    if(error instanceof HandleError) throw error;
+   throw new HandleError("User not found", 400);
   }
  }
 

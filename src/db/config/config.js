@@ -10,7 +10,6 @@ export default {
   dialect: process.env.DB_DIALECT,
   database: process.env.DB_NAME,
   port: process.env.DB_PORT,
-  storage: "./src/tests/database.sqlite",
   define: {
     timestamps: false
   }

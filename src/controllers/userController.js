@@ -1,4 +1,3 @@
-import userRepository from "../repositories/userRepository.js";
 import UserRepository from "../repositories/userRepository.js";
 import Joi from "joi";
 
@@ -13,14 +12,11 @@ class UserController {
 
   const { error, value } = schema.validate(req.body);
 
-  if (error) {
-   console.error("Error in user input fields", error);
-   return res.status(400).json({ msg: "Error in user input fields" });
-  }
+  if (error) return res.status(400).json({ msg: "Error in user input fields" });
 
   const avatar = req.file;
 
-  if(!avatar) return res.status(400).json({msg: "Avatar pic is empty"});
+  if (!avatar) return res.status(400).json({ msg: "Avatar pic is empty" });
 
   UserRepository.create(value, avatar)
    .then((newUser) => {
@@ -28,19 +24,18 @@ class UserController {
     return res.status(201).json({ response });
    })
    .catch((error) => {
-    console.error(error);
     return res.status(error.statusCode).json({ msg: error.message });
    });
  }
 
  delete(req, res) {
-  
   const schema = Joi.object({
    id: Joi.string().required(),
   });
   const { error, value } = schema.validate(req.params);
-  if (error) throw new Error("Error when trying to validate an id", 400);
-
+  
+  if (error)  return res.status(400).json({ msg: "Error in id field" });
+  
   const { id } = value;
 
   UserRepository.delete(id)
@@ -52,7 +47,6 @@ class UserController {
     })
    )
    .catch((error) => {
-    console.error(error);
     return res.status(error.statusCode).json({ msg: error.message });
    });
  }
@@ -62,11 +56,11 @@ class UserController {
    email: Joi.string().required(),
    password: Joi.string().required(),
   });
-  
+
   const { error, value } = schema.validate(req.body);
-  
-  if (error) res.status(400).json({ msg: "Error with login fields" });
-  
+
+  if (error) return res.status(400).json({ msg: "Error with login fields" });
+
   const { email, password } = value;
 
   UserRepository.login(email, password)
@@ -76,14 +70,15 @@ class UserController {
    });
  }
 
- getAll(req, res){
-  userRepository.getAll()
-  .then((data)=>{
-    res.status(200).json({msg: data});
-  })
-  .catch((error)=>{
-    res.status(error.statusCode).json({msg: error.message})
-  });
+ getAll(req, res) {
+  UserRepository
+   .getAll()
+   .then((data) => {
+    res.status(200).json({ msg: data });
+   })
+   .catch((error) => {
+    res.status(error.statusCode).json({ msg: error.message });
+   });
  }
 }
 
