@@ -1,4 +1,4 @@
-import logger from "../logger/loggerConfig";
+import logger from "../logger/loggerConfig.js";
 
 class HandleError {
   constructor(message = "", statusCode = 500, unexpectedError = null){
