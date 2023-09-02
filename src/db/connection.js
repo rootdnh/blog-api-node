@@ -1,7 +1,6 @@
 import { Sequelize } from "sequelize";
 import config from "./config/config.js";
 
-
 const databaseConnection = new Sequelize(
  config.database,
  config.username,
