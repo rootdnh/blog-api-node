@@ -12,5 +12,6 @@ export default {
   port: process.env.DB_PORT,
   define: {
     timestamps: false
-  }
+  },
+  ssl: process.env.SSL === "true" ? true : false
 }

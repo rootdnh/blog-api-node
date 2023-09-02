@@ -12,3 +12,32 @@
 {"level":30, "time":"31/08/2023, 18:28:13","msg":"Database connected at: localhost:5433"}
 {"level":30, "time":"31/08/2023, 18:29:44","msg":"Server is running at port: localhost:5000"}
 {"level":30, "time":"31/08/2023, 18:29:44","msg":"Database connected at: localhost:5433"}
+{"level":30, "time":"01/09/2023, 14:03:08","msg":"Server is running at port: localhost:5000"}
+{"level":30, "time":"01/09/2023, 14:03:09","msg":"Database connected at: localhost:5433"}
+{"level":30, "time":"01/09/2023, 14:12:46","req":{"id":1,"method":"GET","url":"/get-users","query":{},"params":{},"headers":{"authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImZhYjkyY2Y3LWQzZDMtNGJiNC1hMGM5LTdkNjBkNDBjMzdmYyIsImVtYWlsIjoiYXZhdGFyQGdtYWlsLmNvbSIsImlhdCI6MTY5MzA5OTE0NSwiZXhwIjoxNjkzNzgzMTQ1fQ.dqjdOIPk6-E_wCbns_9f_B1y5AxnHsjQkUNPXXnK8G8","user-agent":"PostmanRuntime/7.29.3","accept":"*/*","postman-token":"9c8e53fd-ebd3-4653-a1ca-e4674d6047af","host":"localhost:5000","accept-encoding":"gzip, deflate, br","connection":"keep-alive"},"remoteAddress":"::1","remotePort":36292},"res":{"statusCode":200,"headers":{"x-powered-by":"Express","access-control-allow-origin":"*","content-type":"application/json; charset=utf-8","content-length":"510","etag":"W/\"1fe-wu0Q4MlOy55S4y22WhN4pbtFGHc\""}},"responseTime":275,"msg":"request completed"}
+{"level":30, "time":"01/09/2023, 14:15:42","msg":"Server is running at port: localhost:5000"}
+{"level":30, "time":"01/09/2023, 14:15:42","msg":"Database connected at: localhost:5433"}
+{"level":30, "time":"02/09/2023, 14:20:06","msg":"Server is running at port: localhost:5000"}
+{"level":60, "time":"02/09/2023, 14:20:07","msg":"Something is wrong in database connection SequelizeConnectionError: The server does not support SSL connections"}
+{"level":40, "time":"02/09/2023, 14:20:07","msg":"Error syncing user template, SequelizeConnectionError: The server does not support SSL connections"}
+{"level":30, "time":"02/09/2023, 14:24:55","msg":"Server is running at port: localhost:5000"}
+{"level":60, "time":"02/09/2023, 14:24:55","msg":"Something is wrong in database connection SequelizeConnectionError: The server does not support SSL connections"}
+{"level":40, "time":"02/09/2023, 14:24:55","msg":"Error syncing user template, SequelizeConnectionError: The server does not support SSL connections"}
+{"level":30, "time":"02/09/2023, 14:25:57","msg":"Server is running at port: localhost:5000"}
+{"level":60, "time":"02/09/2023, 14:25:57","msg":"Something is wrong in database connection SequelizeConnectionError: The server does not support SSL connections"}
+{"level":40, "time":"02/09/2023, 14:25:57","msg":"Error syncing user template, SequelizeConnectionError: The server does not support SSL connections"}
+{"level":30, "time":"02/09/2023, 14:28:03","msg":"Server is running at port: localhost:5000"}
+{"level":60, "time":"02/09/2023, 14:28:03","msg":"Something is wrong in database connection SequelizeConnectionError: The server does not support SSL connections"}
+{"level":40, "time":"02/09/2023, 14:28:03","msg":"Error syncing user template, SequelizeConnectionError: The server does not support SSL connections"}
+{"level":30, "time":"02/09/2023, 14:28:17","msg":"Server is running at port: localhost:5000"}
+{"level":60, "time":"02/09/2023, 14:28:17","msg":"Something is wrong in database connection SequelizeConnectionError: The server does not support SSL connections"}
+{"level":40, "time":"02/09/2023, 14:28:17","msg":"Error syncing user template, SequelizeConnectionError: The server does not support SSL connections"}
+{"level":30, "time":"02/09/2023, 14:30:29","msg":"Server is running at port: localhost:5000"}
+{"level":30, "time":"02/09/2023, 14:30:30","msg":"Database connected at: localhost:5433"}
+{"level":30, "time":"02/09/2023, 14:31:02","msg":"Server is running at port: localhost:5000"}
+{"level":30, "time":"02/09/2023, 14:31:02","msg":"Database connected at: localhost:5433"}
+{"level":30, "time":"02/09/2023, 14:31:08","msg":"Server is running at port: localhost:5000"}
+{"level":60, "time":"02/09/2023, 14:31:08","msg":"Something is wrong in database connection SequelizeConnectionError: The server does not support SSL connections"}
+{"level":40, "time":"02/09/2023, 14:31:08","msg":"Error syncing user template, SequelizeConnectionError: The server does not support SSL connections"}
+{"level":30, "time":"02/09/2023, 14:31:11","msg":"Server is running at port: localhost:5000"}
+{"level":30, "time":"02/09/2023, 14:31:11","msg":"Database connected at: localhost:5433"}

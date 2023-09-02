@@ -10,6 +10,11 @@ const databaseConnection = new Sequelize(
   host: config.host,
   port: config.port,
   dialect: config.dialect,
+  dialectOptions: {
+    ssl: config.ssl ? {
+      require: true
+    } : false
+  },
   storage: config.storage,
   logging: false,
  }
