@@ -47,7 +47,7 @@ class UserController {
     })
    )
    .catch((error) => {
-    return res.status(error.statusCode).json({ msg: error.message });
+    res.status(error.statusCode).json({ msg: error.message });
    });
  }
 
@@ -58,15 +58,13 @@ class UserController {
   });
 
   const { error, value } = schema.validate(req.body);
-
   if (error) return res.status(400).json({ msg: "Error with login fields" });
-
   const { email, password } = value;
 
   UserRepository.login(email, password)
    .then((response) => res.status(200).json(response))
    .catch((error) => {
-    return res.status(error.statusCode).json({ msg: error.message });
+    res.status(error.statusCode).json({ msg: error.message });
    });
  }
 
