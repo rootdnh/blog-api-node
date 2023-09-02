@@ -3,3 +3,4 @@ src/tests/coverage
 src/uploads/
 .env
 ddagent-install.log
+*.log
