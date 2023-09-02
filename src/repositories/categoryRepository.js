@@ -11,8 +11,7 @@ class CategoryRepository {
   try {
    await categoryModel.sync();
   } catch (error) {
-   console.error(error);
-   throw new HandleError("Error when trying sync with Category model", 500);
+   throw new HandleError("Error when trying sync with Category model", 500, error);
   }
  }
 
@@ -32,10 +31,8 @@ class CategoryRepository {
 
    if (response) return response;
   } catch (error) {
-   if (error instanceof HandleError) {
-    throw new HandleError(error.message, error.statusCode);
-   }
-   throw new HandleError("Error when trying to create a category", 500);
+   if (error instanceof HandleError) throw error;
+   throw new HandleError("Error when trying to create a category", 500, error);
   }
  }
 
@@ -44,8 +41,7 @@ class CategoryRepository {
     const response = await categoryModel.findAll();
     if(response) return response;
   } catch (error) {
-    console.error(error);
-    throw new HandleError("Error when trying to get categories", 500);
+    throw new HandleError("Error when trying to get categories", 500, error);
   }
  }
 
