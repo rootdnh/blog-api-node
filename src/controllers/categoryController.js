@@ -9,7 +9,8 @@ class CategoryController {
     })
     const {error, value} = schema.validate(req.body);
     
-    if(error) res.status(400).json({msg: "Something wrong with the category field"})
+    if(error) return res.status(400).json({msg: "Something wrong with the category field"})
+    
     const {category} = value;
 
     CategoryRepository.create(category)
@@ -18,7 +19,6 @@ class CategoryController {
       .status(201)
       .json({msg: "The category has been created successfully", response}))
     .catch((error)=>{
-      console.error(error)
       return res.status(error.statusCode).json({msg: error.message});
     })
   }
