@@ -13,8 +13,7 @@ class PostRepository {
   try {
    await postModel.sync();
   } catch (error) {
-   console.error(error);
-   throw new HandleError("Error when trying to sync post model", 500);
+   throw new HandleError("Error when trying to sync post model", 500, error);
   }
  }
 
@@ -22,12 +21,14 @@ class PostRepository {
   try {
    const { title, content, idUser, idCategory } = post;
 
-   const userExists = await userModel.findByPk(idUser);
-   const categoryExists = await categoryModel.findByPk(idCategory);
+   const [userExists, categoryExists] = await Promise.all([
+    userModel.findByPk(idUser),
+    categoryModel.findByPk(idCategory)
+   ]);
 
-   if (!userExists || !categoryExists)
+   if (!userExists || !categoryExists){
     throw new HandleError("User or category doesn't exists", 400);
-
+   }
    const titleExist = await postModel.findOne({
     where: {
      title: {
@@ -36,9 +37,9 @@ class PostRepository {
     },
    });
 
-   if (titleExist)
+   if (titleExist){
     throw new HandleError("The title has already been created", 400);
-
+  }
    const response = await postModel.create({
     title,
     content,
@@ -48,23 +49,23 @@ class PostRepository {
 
    return response;
   } catch (error) {
-    console.error(error);
-   if (error instanceof HandleError)
-    throw new HandleError(error.message, error.statusCode);
-   throw new HandleError("Error when trying to create a post", 500);
+   if (error instanceof HandleError) throw error;
+   throw new HandleError("Error when trying to create a post", 500, error);
   }
  }
 
  async delete(id) {
   try {
    const postExists = await postModel.destroy({ where: { id } });
-   if (!postExists) throw new HandleError("Post not found", 400);
+   
+   if (!postExists){
+    throw new HandleError("Post not found", 400);
+   } 
+   
    return { msg: "Post has been deleted successfully", id };
   } catch (error) {
-    console.error(error);
-   if (error instanceof HandleError)
-    throw new HandleError(error.message, error.statusCode);
-   throw new HandleError("Error when trying to delete a user", 500);
+   if (error instanceof HandleError)throw error;
+   throw new HandleError("Error when trying to delete a user", 500, error);
   }
  }
 
@@ -74,8 +75,10 @@ class PostRepository {
    const { id, title, idUser, idCategory } = post;
    const idExists = await postModel.findByPk(id);
 
-   if (!idExists) throw new HandleError("Post not found", 400);
-   
+   if (!idExists){
+    throw new HandleError("Post not found", 400);
+   }
+
    const [idUserExists, idCategoryExists] = await Promise.all([
     userModel.findOne({ where: { id: idUser }}),
     categoryModel.findOne({where: { id: idCategory }})
@@ -96,26 +99,26 @@ class PostRepository {
 
    if(titleExist) throw new HandleError("The title already exists", 400);
 
-   
    await postModel.update(post, {where: {id}});
 
    return post;
 
   } catch (error) {
-    console.error(error);
-   if (error instanceof HandleError)
-    throw new HandleError(error.message, error.statusCode);
-   throw new HandleError("Error when trying to update a post", 500);
+   if (error instanceof HandleError) throw error;
+   throw new HandleError("Error when trying to update a post", 500, error);
   }
  }
 
  async getAll(){
   try {
     const response = await postModel.findAll({include: [categoryModel]});
+    if(!response){
+      throw new HandleError("Nothing found", 404);
+    }
     return response;
   } catch (error) {
-    console.error(error);
-    throw new HandleError("500", "Error when trying to get all posts");
+    if(error instanceof HandleError) throw error;
+    throw new HandleError("Error when trying to get all posts", 500, error);
   }
  }
 }
