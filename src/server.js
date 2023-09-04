@@ -10,6 +10,9 @@ import databaseConnection from "./db/connection.js";
 import { MulterError } from "multer";
 import logger from "./logger/loggerConfig.js";
 import PinoHttp from "pino-http";
+import swagger from "swagger-ui-express";
+import swaggerConfig from "./documentation/swaggerConfig.json" assert {type: "json"};
+
 
 class Server {
  constructor() {
@@ -23,11 +26,7 @@ class Server {
  async connection() {
   try {
    await databaseConnection.authenticate();
-   const databaseConnectionInfo = {
-    host: databaseConnection.options.host,
-    port: databaseConnection.options.port,
-   };
-   let message = `Database connected at: ${databaseConnectionInfo.host}:${databaseConnectionInfo.port}`;
+   let message = `Database connected at: ${databaseConnection.options.hos}:${databaseConnection.options.port}`;
    logger.info(message);
    console.log("\x1b[33m", message);
   } catch (error) {
@@ -40,6 +39,7 @@ class Server {
  middlewares() {
   this.server.use(PinoHttp({ logger }));
   this.server.use(express.json());
+  this.server.use("/api-docs", swagger.serve, swagger.setup(swaggerConfig));
   this.server.use(express.urlencoded({extended: true}));
   this.server.use(cors({ origin: "*" }));
  }

@@ -1,0 +1,38 @@
+{
+  "openapi": "3.0.0",
+  "title": "BLOG-API",
+  "description": "A nodejs API to improve my skills",
+   "paths": {
+    "/login": {
+      "summary": "Login a user",
+      "description": "Logging a user and responding with a token",
+      "tags": ["User"],
+      "requestBody": {
+        "content": {
+         "application/json": {
+          "schema": {
+             "$ref": "#/components/schemas/Users"
+          }
+         }
+        }
+      }
+    }
+  
+   },
+   "components": {
+    "schemas": {
+      "Users": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    }
+   }
+
+}
