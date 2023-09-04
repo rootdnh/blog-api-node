@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import HandleError from "../error/handleError";
+import HandleError from "../error/handleError.js";
 
 class JwtUtil {
  constructor() {

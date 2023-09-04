@@ -1,16 +1,20 @@
 import multer from "multer";
-import path from "path";
+import path, {dirname} from "path";
 import crypto from "crypto";
 import HandleError from "../error/handleError.js";
+import logger from "../logger/loggerConfig.js";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const storage = multer.diskStorage({
   destination: (req, file, callback)=>{
-    callback(null, path.resolve("src/uploads"));
+    callback(null, path.join(__dirname, "src/uploads"));
   },
   filename: (req, file, callback)=>{
     crypto.randomBytes(16, (err, hash)=>{
       if(err) {
-        console.error("File name multer error: ", err);
+        logger.warn(`File name multer error, ${err}`);
         callback(err);
       }
       const fileName = `${hash.toString('hex')}-${file.originalname}`;
