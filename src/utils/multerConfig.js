@@ -9,7 +9,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const storage = multer.diskStorage({
   destination: (req, file, callback)=>{
-    callback(null, path.join(__dirname, "src/uploads"));
+    callback(null, path.resolve(__dirname, "../uploads"));
   },
   filename: (req, file, callback)=>{
     crypto.randomBytes(16, (err, hash)=>{
