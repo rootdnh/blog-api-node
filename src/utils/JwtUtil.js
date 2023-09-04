@@ -25,9 +25,11 @@ class JwtUtil {
  verify(token) {
   try {
    const isValid = jwt.verify(token, this.secret);
-   return !!isValid;
+   return isValid;
   } catch (error) {
-    throw new HandleError("Error then trying to verify a token", 500, error)
+    if(error instanceof jwt.TokenExpiredError) throw new HandleError("Expired token", 401);
+    if(error instanceof jwt.JsonWebTokenError) throw new HandleError("Invalid token", 401);
+    throw new HandleError("Error when trying to verify a token", 500, error)
   }
  }
 }

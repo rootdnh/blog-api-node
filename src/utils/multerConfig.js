@@ -39,5 +39,5 @@ export const upload = multer({
     }else {
       callback(new HandleError(`Error in image format, allowed formats ${allowedMimes}`, 400));
     }
-  },
+  }
 });
