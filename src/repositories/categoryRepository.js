@@ -25,11 +25,12 @@ class CategoryRepository {
     },
    });
 
-   if (categoryExist) throw new HandleError("The category already exists", 400);
-
+   if (categoryExist){
+    throw new HandleError("The category already exists", 400);
+   }
    const response = await categoryModel.create({ name: category });
-
    if (response) return response;
+   throw new HandleError("Error when try to save a category", 500);
   } catch (error) {
    if (error instanceof HandleError) throw error;
    throw new HandleError("Error when trying to create a category", 500, error);
@@ -40,6 +41,7 @@ class CategoryRepository {
   try {
     const response = await categoryModel.findAll();
     if(response) return response;
+    throw new HandleError("Error when trying get all categories");
   } catch (error) {
     throw new HandleError("Error when trying to get categories", 500, error);
   }
