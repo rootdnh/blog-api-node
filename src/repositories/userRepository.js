@@ -2,8 +2,8 @@ import userModel from "../db/models/userModel.js";
 import bcrypt from "bcryptjs";
 import HandleError from "../error/handleError.js";
 import JwtUtil from "../utils/JwtUtil.js";
-import {avatarModel} from "../db/models/avatarModel.js";
-import logger from  "../logger/loggerConfig.js"
+import { avatarModel } from "../db/models/avatarModel.js";
+import logger from "../logger/loggerConfig.js";
 
 class UserRepository {
  constructor() {
@@ -51,14 +51,14 @@ class UserRepository {
    const id = newUser.dataValues.id;
    const token = JwtUtil.generate({ id, email });
 
-   const {filename, originalname, size} = avatar;
-   
+   const { filename, originalname, size } = avatar;
+
    const newAvatar = await avatarModel.create({
     originalName: originalname,
     url: filename,
     size,
     hashedName: filename,
-    idUser: id
+    idUser: id,
    });
 
    return { ...newUser.dataValues, token, newAvatar };
@@ -74,37 +74,52 @@ class UserRepository {
    if (response) return response;
    throw new HandleError("Id not found", 404);
   } catch (error) {
-    if(error instanceof HandleError) throw error;
+   if (error instanceof HandleError) throw error;
    throw new HandleError("User not found", 400, error);
   }
  }
 
- async getAll(){
+ async getAll() {
   try {
-    const arrUsers = await userModel.findAll({
-      include: [avatarModel]
-    });
-    return arrUsers;
+   const arrUsers = await userModel.findAll({
+    include: [avatarModel],
+   });
+   return arrUsers;
   } catch (error) {
-    logger.fatal(`Error when trying to get all users, ${error}`);
-    throw new HandleError("Error when trying to get all users", 500, error)
+   logger.fatal(`Error when trying to get all users, ${error}`);
+   throw new HandleError("Error when trying to get all users", 500, error);
   }
-}
+ }
 
  async login(email, password) {
-  
   try {
-   const user = await userModel.findOne({ where: { email }, include: [avatarModel] });
-  
+   const user = await userModel.findOne({
+    where: { email },
+    include: [avatarModel],
+   });
+
    if (!user) throw new HandleError("Email or password is wrong", 400);
 
-   if (await bcrypt.compare(password, user.password)) {
-    const token = JwtUtil.generate({ id: user.id, email: user.email });
-      if(!token) throw new HandleError("Error when trying to generate a token", 500);
-      const response = { id: user.id, email: user.email, token, avatar: user.avatar };
-      return response;
+   const validPass = await bcrypt.compare(password, user.password);
+
+   if (!validPass) {
+    throw new HandleError("Email or password is wrong", 400);
    }
-   throw new HandleError("Email or password is wrong", 400);
+
+   const token = JwtUtil.generate({ id: user.id, email: user.email });
+
+   if (!token) {
+    throw new HandleError("Error when trying to generate a token", 500);
+   }
+
+   const response = {
+    id: user.id,
+    email: user.email,
+    token,
+    avatar: user.avatar,
+   };
+
+   return response;
   } catch (error) {
    if (error instanceof HandleError) throw error;
    throw new HandleError("Error when trying to login a user", 500, error);
