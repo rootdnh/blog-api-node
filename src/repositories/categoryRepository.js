@@ -1,6 +1,7 @@
 import categoryModel from "../db/models/categoryModel.js";
 import HandleError from "../error/handleError.js";
 import { Sequelize } from "sequelize";
+import { skipCalc } from "../utils/skipCalc.js";
 
 class CategoryRepository {
  constructor() {
@@ -42,11 +43,7 @@ class CategoryRepository {
 
  async get(limit = 5, page = 1){
   try {
-    const skip = limit * (page - 1);
-    const response = await categoryModel.findAll({
-      offset: skip,
-      limit
-    });
+    const response = await categoryModel.findAll(skipCalc(limit, page));
 
     if(response) {
       return response;
