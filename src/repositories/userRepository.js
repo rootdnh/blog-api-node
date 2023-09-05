@@ -4,6 +4,7 @@ import HandleError from "../error/handleError.js";
 import JwtUtil from "../utils/JwtUtil.js";
 import { avatarModel } from "../db/models/avatarModel.js";
 import logger from "../logger/loggerConfig.js";
+import { skipCalc } from "../utils/skipCalc.js";
 
 class UserRepository {
  constructor() {
@@ -79,10 +80,12 @@ class UserRepository {
   }
  }
 
- async getAll() {
+ async get(limit = 5, page = 1) {
   try {
+   const skipOption = skipCalc(limit, page);
    const arrUsers = await userModel.findAll({
-    include: [avatarModel],
+    ...skipOption,
+    include: [avatarModel]
    });
    return arrUsers;
   } catch (error) {

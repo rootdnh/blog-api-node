@@ -68,9 +68,22 @@ class UserController {
    });
  }
 
- getAll(req, res) {
+ getUsers(req, res) {
+  const schema = Joi.object({
+    limit: Joi.number().min(1).max(50).default(5),
+    page: Joi.number().min(1)
+  });
+
+  const {error, value} = schema.validate(req.query);
+
+  if(error){
+    return res.status(400).json({response: "Error in query fields"});
+  }
+
+  const {limit, page} = value;
+
   UserRepository
-   .getAll()
+   .get(limit, page)
    .then((data) => {
     res.status(200).json({ msg: data });
    })

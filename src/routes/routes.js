@@ -22,9 +22,9 @@ routes.delete("/delete-post/:id",  auth.verify, PostController.delete);
 
 routes.post("/create-user",  auth.verify, upload.single("avatar"), UserController.create);
 
-routes.get("/get-users", auth.verify, UserController.getAll);
+routes.get("/get-users", auth.verify, UserController.getUsers);
 
-routes.get("/get-posts", auth.verify, PostController.getAll);
+routes.get("/get-posts", auth.verify, PostController.getPosts);
 
 routes.delete("/delete-user/:id", auth.verify, UserController.delete);
 

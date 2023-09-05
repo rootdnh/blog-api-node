@@ -3,6 +3,7 @@ import postModel from "../db/models/postModel.js";
 import userModel from "../db/models/userModel.js";
 import categoryModel from "../db/models/categoryModel.js";
 import { Sequelize, where } from "sequelize";
+import {skipCalc} from "../utils/skipCalc.js";
 
 class PostRepository {
  constructor() {
@@ -109,9 +110,15 @@ class PostRepository {
   }
  }
 
- async getAll(){
+ async get(limit = 5, page = 1){
   try {
-    const response = await postModel.findAll({include: [categoryModel]});
+    const skipOptions = skipCalc(limit, page);
+
+    const response = await postModel.findAll({
+      ...skipOptions,
+      include: [categoryModel]
+    });
+
     if(!response){
       throw new HandleError("Nothing found", 404);
     }
