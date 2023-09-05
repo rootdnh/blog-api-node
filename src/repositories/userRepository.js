@@ -98,8 +98,10 @@ class UserRepository {
     include: [avatarModel],
    });
 
-   if (!user) throw new HandleError("Email or password is wrong", 400);
-
+   if (!user){
+    throw new HandleError("Email or password is wrong", 400);
+   }
+   
    const validPass = await bcrypt.compare(password, user.password);
 
    if (!validPass) {
