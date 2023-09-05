@@ -1,38 +1,151 @@
 {
-  "openapi": "3.0.0",
-  "title": "BLOG-API",
-  "description": "A nodejs API to improve my skills",
-   "paths": {
-    "/login": {
-      "summary": "Login a user",
-      "description": "Logging a user and responding with a token",
-      "tags": ["User"],
-      "requestBody": {
-        "content": {
-         "application/json": {
-          "schema": {
-             "$ref": "#/components/schemas/Users"
-          }
+ "openapi": "3.0.0",
+ "title": "BLOG-API",
+ "description": "A nodejs API to improve my skills",
+ "paths": {
+  "/login": {
+   "post": {
+    "summary": "Login a user",
+    "description": "Logging a user and responding with a token",
+    "tags": ["User"],
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/UsersPost"
+       },
+       "examples": {
+        "user": {
+         "summary": "Example of a user login request",
+         "value": {
+          "email": "user@example.com",
+          "password": "mysecretpass123"
          }
         }
+       }
       }
-    }
-  
-   },
-   "components": {
-    "schemas": {
-      "Users": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
+     }
+    },
+    "responses": {
+     "400": {
+      "description": "Email or password is wrong"
+     },
+     "200": {
+      "description": "User has been logged successfully",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UserResponse"
         }
+       }
       }
+     }
     }
    }
-
+  },
+  "/get-users": {
+   "get": {
+    "security": [{ "bearerAuth": [] }],
+    "summary": "Get all users",
+    "tags": ["User"],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/UserResponse"
+         }
+        }
+       }
+      }
+     },
+     "401": {
+      "description": "Token is missing"
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "UsersPost": {
+    "type": "object",
+    "properties": {
+     "email": {
+      "type": "string"
+     },
+     "password": {
+      "type": "string"
+     }
+    }
+   },
+   "UserResponse": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "name": {
+      "type": "string"
+     },
+     "email": {
+      "type": "string"
+     },
+     "password": {
+      "type": "string"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date format: ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ)"
+     },
+     "avatar": {
+      "$ref": "#/components/schemas/Avatar"
+     }
+    }
+   },
+   "Avatar": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "number"
+     },
+     "hashedName": {
+      "type": "string"
+     },
+     "url": {
+      "type": "string"
+     },
+     "originalName": {
+      "type": "string"
+     },
+     "size": {
+      "type": "number"
+     },
+     "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date format: ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ)"
+     },
+     "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date format: ISO 8601 (YYYY-MM-DDTHH:mm:ss.sssZ)"
+     },
+     "idUser": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "securitySchemes": {
+   "bearerAuth": {
+    "type": "http",
+    "scheme": "bearer",
+    "bearerFormat": "JWT"
+   }
+  }
+ }
 }
