@@ -17,6 +17,10 @@ const postModel = databaseConnection.define("posts", {
   content: {
     type: DataTypes.TEXT,
     allowNull: false
+  },
+  slug: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 });
 

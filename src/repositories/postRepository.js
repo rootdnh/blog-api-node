@@ -3,7 +3,8 @@ import postModel from "../db/models/postModel.js";
 import userModel from "../db/models/userModel.js";
 import categoryModel from "../db/models/categoryModel.js";
 import { Sequelize, where } from "sequelize";
-import {skipCalc} from "../utils/skipCalc.js";
+import { skipCalc } from "../utils/skipCalc.js";
+import slugify from "slugify";
 
 class PostRepository {
  constructor() {
@@ -24,12 +25,13 @@ class PostRepository {
 
    const [userExists, categoryExists] = await Promise.all([
     userModel.findByPk(idUser),
-    categoryModel.findByPk(idCategory)
+    categoryModel.findByPk(idCategory),
    ]);
 
-   if (!userExists || !categoryExists){
+   if (!userExists || !categoryExists) {
     throw new HandleError("User or category doesn't exists", 400);
    }
+
    const titleExist = await postModel.findOne({
     where: {
      title: {
@@ -38,14 +40,26 @@ class PostRepository {
     },
    });
 
-   if (titleExist){
+   if (titleExist) {
     throw new HandleError("The title has already been created", 400);
-  }
+   }
+
+   const slug = slugify(title, 
+    { 
+      lower: true, 
+      remove: /[!*+~'"\\:@]/g
+    });
+
+   if(!slug){
+    throw new Error("Slugify can't response");
+   }
+
    const response = await postModel.create({
     title,
     content,
     idUser,
     idCategory,
+    slug
    });
 
    return response;
@@ -58,74 +72,74 @@ class PostRepository {
  async delete(id) {
   try {
    const postExists = await postModel.destroy({ where: { id } });
-   
-   if (!postExists){
+
+   if (!postExists) {
     throw new HandleError("Post not found", 400);
-   } 
-   
+   }
+
    return { msg: "Post has been deleted successfully", id };
   } catch (error) {
-   if (error instanceof HandleError)throw error;
+   if (error instanceof HandleError) throw error;
    throw new HandleError("Error when trying to delete a user", 500, error);
   }
  }
 
  async update(post) {
-
   try {
    const { id, title, idUser, idCategory } = post;
    const idExists = await postModel.findByPk(id);
 
-   if (!idExists){
+   if (!idExists) {
     throw new HandleError("Post not found", 400);
    }
 
    const [idUserExists, idCategoryExists] = await Promise.all([
-    userModel.findOne({ where: { id: idUser }}),
-    categoryModel.findOne({where: { id: idCategory }})
+    userModel.findOne({ where: { id: idUser } }),
+    categoryModel.findOne({ where: { id: idCategory } }),
    ]);
 
-  if (!idUserExists || !idCategoryExists){ 
+   if (!idUserExists || !idCategoryExists) {
     throw new HandleError("User id or category id not found", 400);
-  }
+   }
 
-   const titleExist = await postModel.findOne({where: {
-    title: {
+   const titleExist = await postModel.findOne({
+    where: {
+     title: {
       [Sequelize.Op.iLike]: title,
+     },
+     id: {
+      [Sequelize.Op.not]: id,
+     },
     },
-    id: {
-      [Sequelize.Op.not]: id
-    }
-   }});
+   });
 
-   if(titleExist) throw new HandleError("The title already exists", 400);
+   if (titleExist) throw new HandleError("The title already exists", 400);
 
-   await postModel.update(post, {where: {id}});
+   await postModel.update(post, { where: { id } });
 
    return post;
-
   } catch (error) {
    if (error instanceof HandleError) throw error;
    throw new HandleError("Error when trying to update a post", 500, error);
   }
  }
 
- async get(limit = 5, page = 1){
+ async get(limit = 5, page = 1) {
   try {
-    const skipOptions = skipCalc(limit, page);
+   const skipOptions = skipCalc(limit, page);
 
-    const response = await postModel.findAll({
-      ...skipOptions,
-      include: [categoryModel]
-    });
+   const response = await postModel.findAll({
+    ...skipOptions,
+    include: [categoryModel],
+   });
 
-    if(!response){
-      throw new HandleError("Nothing found", 404);
-    }
-    return response;
+   if (!response) {
+    throw new HandleError("Nothing found", 404);
+   }
+   return response;
   } catch (error) {
-    if(error instanceof HandleError) throw error;
-    throw new HandleError("Error when trying to get all posts", 500, error);
+   if (error instanceof HandleError) throw error;
+   throw new HandleError("Error when trying to get all posts", 500, error);
   }
  }
 }
