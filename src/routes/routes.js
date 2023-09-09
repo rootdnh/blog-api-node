@@ -24,7 +24,7 @@ routes.post("/create-user",  auth.verify, upload.single("avatar"), UserControlle
 
 routes.get("/get-users", auth.verify, UserController.getUsers);
 
-routes.get("/get-posts", auth.verify, PostController.getPosts);
+routes.get("/get-posts", PostController.getPosts);
 
 routes.delete("/delete-user/:id", auth.verify, UserController.delete);
 
