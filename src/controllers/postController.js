@@ -76,7 +76,7 @@ class PostController {
   const {error, value} = schema.validate(req.query);
 
   if(error){
-    return res.status(400).kson({response: "Error in query fields"});
+    return res.status(400).json({response: "Error in query fields"});
   }
   
   const {limit, page} = value;
