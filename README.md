@@ -1,4 +1,4 @@
-<a href="https://github.com/rootdnh/blog-frontend-react">Frontend</a>
+<a href="https://github.com/rootdnh/blog-frontend-react">Here is the Frontend</a>
 
 # Steps to run 
 
