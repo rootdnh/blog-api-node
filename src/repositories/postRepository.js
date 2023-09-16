@@ -2,7 +2,7 @@ import HandleError from "../error/handleError.js";
 import postModel from "../db/models/postModel.js";
 import userModel from "../db/models/userModel.js";
 import categoryModel from "../db/models/categoryModel.js";
-import { Sequelize, where } from "sequelize";
+import { Sequelize } from "sequelize";
 import { skipCalc } from "../utils/skipCalc.js";
 import slugify from "slugify";
 
@@ -141,6 +141,27 @@ class PostRepository {
   } catch (error) {
    if (error instanceof HandleError) throw error;
    throw new HandleError("Error when trying to get all posts", 500, error);
+  }
+ }
+
+ async search(query){
+  try {
+    const data = await postModel.findAll({where: {
+      [Sequelize.Op.or]: [
+        {title: {[Sequelize.Op.iLike]: `%${query}%`}},
+        {content: {[Sequelize.Op.iLike]: `%${query}%`}}
+      ]}
+    });
+
+    if(!data){
+    throw new HandleError("No post found", 404);
+    }
+
+    return data;
+
+  } catch (error) {
+    if(error instanceof HandleError) throw error;
+    throw new HandleError("Error when trying to search posts", 500, error);
   }
  }
 }

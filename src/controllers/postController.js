@@ -83,11 +83,34 @@ class PostController {
 
   PostRepository.get(limit, page)
    .then((data) => {
-    res.status(200).json({ msg: data });
+    res.status(200).json(data);
    })
    .catch((error) => {
     res.status(error.statusCode).json({ msg: error.message });
    });
+ }
+
+ search(req, res){
+  const schema = Joi.object({
+    search: Joi.string()
+  });
+
+  const {error, value} = schema.validate(req.query);
+
+  if(error){
+    return res.status(404).json({msg: "Error in query fields"});
+  }
+
+  const query = value.search;
+
+  PostRepository.search(query)
+   .then((response)=>{
+    res.status(200).json(response);
+   })
+   .catch((error)=>{
+    res.status(error.statusCode).json({msg: error.message});
+   })
+
  }
 }
 

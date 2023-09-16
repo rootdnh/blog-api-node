@@ -26,7 +26,7 @@ class Server {
  async connection() {
   try {
    await databaseConnection.authenticate();
-   let message = `Database connected at: ${databaseConnection.options.hos}:${databaseConnection.options.port}`;
+   let message = `Database connected at: ${databaseConnection.options.host}:${databaseConnection.options.port}`;
    logger.info(message);
    console.log("\x1b[33m", message);
   } catch (error) {
