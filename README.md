@@ -1,11 +1,10 @@
 <a href="https://github.com/rootdnh/blog-frontend-react">Here is the Frontend </a>
 
+(under development)
+
 # Steps to run 
 
-If you don't use linux OS remove the "sudo"
-
-
-* Create postgres image in docker (duplicate this for dev version)
+* Create postgres container in docker (duplicate this for dev version)
 
 ```
 sudo docker run --name blog-api-node \
@@ -32,9 +31,11 @@ sudo docker run --name blog-api-dev \
 sudo docker exec -it blog-api-node psql -U blog-api-user -d blog-api
 
 ```
-* To start the docker image (just in linux rsrs)
+* To start the docker container:
 ```
 ./docker_start.sh
 
 ```
+
+* I use logrotate to rotating the .log files (soon i want to create .yaml to help)
 
