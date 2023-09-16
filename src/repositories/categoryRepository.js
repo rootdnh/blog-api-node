@@ -71,6 +71,35 @@ class CategoryRepository {
   }
  }
 
+ async update(data){
+  try {
+    const { id, category: name } = data;
+
+    const exists = await categoryModel.findOne({where: {id}});
+    if(!exists){
+      throw new HandleError("Category not found", 404);
+    }
+    
+    if(exists.dataValues.name === name){
+      console.log("here")
+      throw new HandleError("The category name is the same", 400);
+    }
+
+    const response = await categoryModel.update({id, name}, {where: {id}});
+
+    if(!response){
+      throw new HandleError("Error when trying to update a category", 500, response)
+    }
+    
+    return {id, name};
+
+  } catch (error) {
+    if(error instanceof HandleError) throw error;
+    throw new HandleError("Internal server error", 500);
+  }
+
+ }
+
 }
 
 export default new CategoryRepository();

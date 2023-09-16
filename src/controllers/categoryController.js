@@ -42,6 +42,27 @@ class CategoryController {
    });
  }
 
+ update(req, res){
+  const schema = Joi.object({
+    id: Joi.number(),
+    category: Joi.string()
+  });
+
+  const {error, value} = schema.validate(req.body);
+
+  if(error){
+    return res.status(400).json({msg: "Error in category fields"});
+  }
+
+  CategoryRepository.update(value)
+   .then((response)=>{
+    res.status(200).json({msg: "Category has been updated successfully", response});
+   })
+   .catch((error)=>{
+    res.status(error.statusCode).json({msg: error.message});
+   })
+ }
+
  getCategories(req, res) {
   const schema = Joi.object({
    limit: Joi.number().min(1).max(50).default(5),

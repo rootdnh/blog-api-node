@@ -36,6 +36,8 @@ routes.post("/create-post",  auth.verify, PostController.create);
 
 routes.put("/update-post",  auth.verify, PostController.update);
 
+routes.put("/update-category", auth.verify, CategoryController.update);
+
 routes.get("*", (_, res) => {
   res.status(404).sendFile("not-found.html", {root: path.resolve(__dirname, "../public")})
 });
