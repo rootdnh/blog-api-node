@@ -131,6 +131,7 @@ class PostRepository {
    const response = await postModel.findAll({
     ...skipOptions,
     include: [categoryModel],
+    order: [['createdAt', 'DESC']]
    });
 
    if (!response) {
