@@ -34,7 +34,7 @@ class PostController {
   });
 
   const { error, value } = schema.validate(req.params);
-  if (error) return res.status(400).json({ msg: "Error with post fields" });
+  if (error) return res.status(400).json({ msg: "Error in post fields" });
   const { id } = value;
 
   PostRepository.delete(id)
@@ -60,7 +60,7 @@ class PostController {
    .then((response) =>
     res
      .status(201)
-     .json({ msg: "Post has been updated successfully", response })
+     .json({ msg: "The post was successfully updated", response })
    )
    .catch((error) => {
     res.status(error.statusCode).json({ msg: error.message });

@@ -41,6 +41,23 @@ class CategoryRepository {
   }
  }
 
+ async delete(id){
+  try {
+    const deleted = await categoryModel.destroy({where: {
+      id
+    }});
+
+    if(!deleted){
+      throw new HandleError("Category not found", 404);
+    }
+
+    return {msg: "The category was successfully deleted"}
+
+  } catch (error) {
+    if(error instanceof HandleError) throw error;
+    throw new HandleError("There was a problem trying to delete the category", 500, error);
+  }
+ }
  async get(limit = 5, page = 1){
   try {
     const response = await categoryModel.findAll(skipCalc(limit, page));

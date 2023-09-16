@@ -16,6 +16,8 @@ routes.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 routes.get("/get-categories",  auth.verify, CategoryController.getCategories);
 
+routes.delete("/category-delete/:id", auth.verify, CategoryController.delete);
+
 routes.get("/auth-verify",  auth.verify, (_, res)=> res.status(200).json({response: true}));
 
 routes.delete("/delete-post/:id",  auth.verify, PostController.delete);
