@@ -1,6 +1,7 @@
+const envs = {dev: ".env.dev", prod: ".env", test: ".env.test"}
 import dotenv from "dotenv";
 dotenv.config({
- path: process.env.NODE_ENV === "dev" ? ".env.dev" : ".env",
+  path: envs[process.env.NODE_ENV] 
 });
 import express from "express";
 import cors from "cors";
