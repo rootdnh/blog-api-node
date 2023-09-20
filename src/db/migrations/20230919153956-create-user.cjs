@@ -1,6 +1,6 @@
 'use strict';
-const {v4} = require("uuid");
 const { DataTypes } = require("sequelize");
+const {v4 } = require("uuid");
 
 module.exports = {
   async up (queryInterface, Sequelize) {

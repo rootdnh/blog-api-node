@@ -10,6 +10,11 @@ export default {
     "dialect": config.dialect
   },
   "test": {
+    "username": config.username,
+    "password": config.password,
+    "database": config.database,
+    "host": config.host,
+    "port": config.port,
     "storage": config.storage,
     "dialect": config.dialect,
     "logging": true
