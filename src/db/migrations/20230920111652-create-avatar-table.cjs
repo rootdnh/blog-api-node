@@ -1,36 +1,34 @@
 'use strict';
 
-const { DataTypes } = require('sequelize');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('avatars', {
       id: {
-        type:  DataTypes.INTEGER,
+        type:  Sequelize.INTEGER,
         autoIncrement: true,
         unique: true,
         allowNull: false,
         primaryKey: true
       },
       hashedName: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
       },
       url: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
       },
       originalName: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
       },
       size: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
       },
       idUser: {
-        type: DataTypes.UUID,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'users',
@@ -38,6 +36,14 @@ module.exports = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false
       }
     });
   },

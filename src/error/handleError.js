@@ -9,7 +9,7 @@ class HandleError {
   }
 
   consoleError(){
-    if(this.unexpectedError && process.env.NODE_ENV == "dev") logger.fatal(`Handle Unexpected, ${this.unexpectedError}`);
+    if(this.unexpectedError && (process.env.NODE_ENV == "dev" || process.env.NODE_ENV == "test")) logger.fatal(`Handle Unexpected, ${this.unexpectedError}`);
   }
 }
 

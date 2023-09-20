@@ -28,8 +28,11 @@ class PostRepository {
     categoryModel.findByPk(idCategory),
    ]);
 
-   if (!userExists || !categoryExists) {
-    throw new HandleError("User or category doesn't exists", 400);
+   if (!userExists) {
+    throw new HandleError("User doesn't exists", 400);
+   }
+   if (!categoryExists) {
+    throw new HandleError("Category doesn't exists", 400);
    }
 
    const titleExist = await postModel.findOne({

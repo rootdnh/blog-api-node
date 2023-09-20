@@ -32,8 +32,6 @@ module.exports = {
         defaultValue: DataTypes.NOW(),
         allowNull: false
       }
-    },{
-      timestamps: false
     })
   },
   async down (queryInterface, Sequelize) {

@@ -1,46 +1,49 @@
 'use strict';
-const {DataTypes} = require("sequelize");
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable("posts", {
       id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
         unique: true
       },
       title: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
       },
       content: {
-        type: DataTypes.TEXT,
+        type: Sequelize.TEXT,
         allowNull: false
       },
       slug: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false
       },
       idCategory: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'category',
-          key: 'id'
-        },
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {model: 'categories', key: 'id'},
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
       idUser: {
-        type: DataTypes.UUID,
-        references: {
-          model: 'users',
-          key: 'id'
-        },
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {model: 'users',key: 'id'},
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
       },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false
+      }
     });
      
   },
