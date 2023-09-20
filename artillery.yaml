@@ -1,0 +1,11 @@
+config: 
+ target: 'http://localhost:5000'
+ phases:
+   - arrivalRate: 5
+     duration: 60
+
+scenarios: 
+ - flow: 
+     - get:
+         url: '/get-posts'
+ 

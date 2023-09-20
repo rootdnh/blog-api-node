@@ -38,7 +38,7 @@ describe('Suite: user controller', ()=>{
      fs.unlinkSync(url);
 
   });
-
+  //many changes after a write this tests, so when i have more time e do it
   // it('Should create a hashed password', async ()=>{
   //   let password = "123";
   //   let response = await userRepository.hashPassword(password);
