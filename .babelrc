@@ -1,13 +1,21 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-    "targets": {
-      "node": "current"
-     }
-    }]
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
   ],
   "plugins": [
-    "@babel/plugin-transform-modules-commonjs",
-    "@babel/plugin-syntax-import-attributes"
+    ["babel-plugin-transform-import-meta", { "module": "ES6" }],
+    [
+      "@babel/plugin-syntax-import-attributes",
+      {
+        "deprecatedAssertSyntax": true
+      }
+    ]
   ]
 }

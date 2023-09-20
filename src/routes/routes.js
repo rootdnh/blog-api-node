@@ -5,14 +5,12 @@ import PostController from "../controllers/postController.js";
 const routes = new Router();
 import auth from "./middlewares/auth.js";
 import {upload} from "../utils/multerConfig.js";
-import path, {dirname} from "path";
-import { fileURLToPath } from "url";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import path from "node:path"
+import {__dirname} from "../../dirname.js"
 
 routes.post("/login", UserController.login);
 
-routes.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+routes.use("/uploads", express.static(path.join(__dirname, "src/uploads")));
 
 routes.get("/get-categories",  auth.verify, CategoryController.getCategories);
 
@@ -41,7 +39,7 @@ routes.put("/update-post",  auth.verify, PostController.update);
 routes.put("/update-category", auth.verify, CategoryController.update);
 
 routes.get("*", (_, res) => {
-  res.status(404).sendFile("not-found.html", {root: path.resolve(__dirname, "../public")})
+  res.status(404).sendFile("not-found.html", {root: path.resolve(__dirname, "src/public")})
 });
 
 export default routes;

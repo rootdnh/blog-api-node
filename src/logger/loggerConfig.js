@@ -1,4 +1,4 @@
-import pino, { destination } from "pino";
+import pino  from "pino";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import fs from "fs";
