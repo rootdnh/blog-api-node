@@ -26,6 +26,8 @@ routes.get("/get-users", auth.verify, UserController.getUsers);
 
 routes.get("/get-posts", PostController.getPosts);
 
+routes.get("/get-post/:slug", PostController.getBySlug);
+
 routes.delete("/delete-user/:id", auth.verify, UserController.delete);
 
 routes.post("/create-category",  auth.verify ,CategoryController.create);

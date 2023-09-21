@@ -112,6 +112,28 @@ class PostController {
    })
 
  }
+
+ getBySlug(req, res){
+  const schema = Joi.object({
+    slug: Joi.string()
+  });
+
+  const {value, error} = schema.validate(req.params)
+
+  if(error){
+    return res.status(404).json({msg: "Error in slug field"});
+  }
+
+  PostRepository.searchBySlug(value.slug)
+    .then((response)=>{
+      res.status(200).json(response)
+    })
+    .catch((error)=>{
+      res.status(error.statusCode).json({error: error.message});
+    })
+  
+ 
+ }
 }
 
 export default new PostController();

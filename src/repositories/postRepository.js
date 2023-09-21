@@ -167,6 +167,26 @@ class PostRepository {
     throw new HandleError("Error when trying to search posts", 500, error);
   }
  }
+
+ async searchBySlug(slug){
+  try {
+    const post = await postModel.findOne({where: {
+      slug: {
+        [Sequelize.Op.iLike]: slug
+      }
+    }});
+
+    if(!post){
+      throw new HandleError("Slug not found", 404)
+    }
+
+    return post;
+  } catch (error) {
+    if(error instanceof HandleError) throw error;
+    throw new HandleError("Error when trying to find a slug", 500, error);
+  }
+ }
+
 }
 
 export default new PostRepository();
