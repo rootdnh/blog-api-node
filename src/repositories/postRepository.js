@@ -131,16 +131,16 @@ class PostRepository {
   try {
    const skipOptions = skipCalc(limit, page);
 
-   const response = await postModel.findAll({
+   const {count: totalPosts, rows: posts} = await postModel.findAndCountAll({
     ...skipOptions,
     include: [categoryModel],
     order: [['createdAt', 'DESC']]
    });
 
-   if (!response) {
+   if (!posts) {
     throw new HandleError("Nothing found", 404);
    }
-   return response;
+   return {totalPosts, posts};
   } catch (error) {
    if (error instanceof HandleError) throw error;
    throw new HandleError("Error when trying to get all posts", 500, error);
