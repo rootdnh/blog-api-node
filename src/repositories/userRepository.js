@@ -82,7 +82,7 @@ class UserRepository {
 
  async get(limit = 5, page = 1) {
   try {
-   const skipOption = skipCalc(limit, page);
+   const skipOption = await skipCalc(limit, page);
    const arrUsers = await userModel.findAll({
     ...skipOption,
     include: [avatarModel]

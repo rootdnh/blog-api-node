@@ -60,7 +60,8 @@ class CategoryRepository {
  }
  async get(limit = 5, page = 1){
   try {
-    const response = await categoryModel.findAll(skipCalc(limit, page));
+    const skip = await skipCalc(limit, page);
+    const response = await categoryModel.findAll(...skip);
 
     if(response) {
       return response;
