@@ -58,10 +58,11 @@ class CategoryRepository {
     throw new HandleError("There was a problem trying to delete the category", 500, error);
   }
  }
- async get(limit = 5, page = 1){
+ async get(lmt = 5, page = 1){
   try {
-    const skip = await skipCalc(limit, page);
-    const response = await categoryModel.findAll(...skip);
+    const {offset, limit} = await skipCalc(lmt, page);
+    console.log({offset, limit})
+    const response = await categoryModel.findAll({offset, limit});
 
     if(response) {
       return response;
