@@ -61,7 +61,6 @@ class CategoryRepository {
  async get(lmt = 5, page = 1){
   try {
     const {offset, limit} = await skipCalc(lmt, page);
-    console.log({offset, limit})
     const response = await categoryModel.findAll({offset, limit});
 
     if(response) {

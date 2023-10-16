@@ -2,6 +2,7 @@ import Joi from "joi";
 import PostRepository from "../repositories/postRepository.js";
 
 class PostController {
+
  create(req, res) {
   const schema = Joi.object({
    title: Joi.string().required(),
@@ -69,7 +70,7 @@ class PostController {
 
  getPosts(req, res) {
   const schema = Joi.object({
-    limit: Joi.number().min(1).max(50).default(5),
+    limit: Joi.number().min(1).max(50),
     page: Joi.number().min(1)
   });
   
@@ -92,7 +93,9 @@ class PostController {
 
  search(req, res){
   const schema = Joi.object({
-    search: Joi.string()
+    query: Joi.string(),
+    limit: Joi.number().max(50),
+    page: Joi.number().min(1)
   });
 
   const {error, value} = schema.validate(req.query);
@@ -101,9 +104,9 @@ class PostController {
     return res.status(404).json({msg: "Error in query fields"});
   }
 
-  const query = value.search;
+  const {query, limit, page} = value;
 
-  PostRepository.search(query)
+  PostRepository.search(query, page, limit)
    .then((response)=>{
     res.status(200).json(response);
    })

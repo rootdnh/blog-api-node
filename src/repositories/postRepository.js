@@ -150,20 +150,26 @@ class PostRepository {
   }
  }
 
- async search(query){
+ async search(query, page = 1, limit = 5){
   try {
-    const data = await postModel.findAll({where: {
+    const skip =  await skipCalc(limit, page);
+    
+    const {count, rows: data} = await postModel.findAndCountAll({
+    where: {  
       [Sequelize.Op.or]: [
         {title: {[Sequelize.Op.iLike]: `%${query}%`}},
         {content: {[Sequelize.Op.iLike]: `%${query}%`}}
-      ]}
+      ]},
+      ...skip,
     });
 
     if(!data){
     throw new HandleError("No post found", 404);
     }
 
-    return data;
+    const maxPages = Math.ceil(count / limit);
+
+    return {posts: data, maxPages };
 
   } catch (error) {
     if(error instanceof HandleError) throw error;
