@@ -34,7 +34,7 @@ routes.post("/create-category",  auth.verify ,CategoryController.create);
 
 routes.post("/create-post",  auth.verify, PostController.create);
 
-routes.get("/posts", auth.verify, PostController.search);
+routes.get("/posts", PostController.search);
 
 routes.put("/update-post",  auth.verify, PostController.update);
 
