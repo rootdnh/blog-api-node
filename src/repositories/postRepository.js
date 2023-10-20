@@ -169,7 +169,7 @@ class PostRepository {
 
     const maxPages = Math.ceil(count / limit);
 
-    return {posts: data, maxPages };
+    return {posts: data, maxPages, registers: count};
 
   } catch (error) {
     if(error instanceof HandleError) throw error;
