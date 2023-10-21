@@ -5,6 +5,7 @@ dotenv.config({
 });
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import routes from "./routes/routes.js";
 import HandleError from "./error/handleError.js";
 import databaseConnection from "./db/connection.js";
@@ -40,6 +41,7 @@ class Server {
  middlewares() {
   this.server.use(PinoHttp({ logger }));
   this.server.use(express.json());
+  this.server.use(helmet());
   this.server.use("/api-docs", swagger.serve, swagger.setup(swaggerConfig));
   this.server.use(express.urlencoded({extended: true}));
   this.server.use(cors({ origin: "*" }));
