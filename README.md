@@ -15,6 +15,12 @@ sudo docker run --name blog-api-node \
 -d postgres
 ```
 
+* Redis
+
+```
+  sudo docker run --name blog-redis -p 6379:6379 -d redis
+```
+
 * Dev version (written here to help)
 
 ```
