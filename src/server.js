@@ -14,7 +14,9 @@ import logger from "./logger/loggerConfig.js";
 import PinoHttp from "pino-http";
 import swagger from "swagger-ui-express";
 import swaggerConfig from "./documentation/swaggerConfig.json" assert {type: "json"};
-
+import { client } from "./db/config/redis-config.js";
+import rateLimit from "express-rate-limit";
+import RateRedis from "rate-limit-redis";
 
 class Server {
  constructor() {
@@ -41,6 +43,16 @@ class Server {
  middlewares() {
   this.server.use(PinoHttp({ logger }));
   this.server.use(express.json());
+  this.server.use(
+    rateLimit({
+      store: new RateRedis({
+        sendCommand: (...args) => client.call(...args)
+      }),
+      windowMs: 1000 * 5,
+      max: 5,
+      message: {error: "Rate limit exceeded, try again later"}
+    })
+  )
   this.server.use(helmet());
   this.server.use("/api-docs", swagger.serve, swagger.setup(swaggerConfig));
   this.server.use(express.urlencoded({extended: true}));
