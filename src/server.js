@@ -49,7 +49,7 @@ class Server {
         sendCommand: (...args) => client.call(...args)
       }),
       windowMs: 1000 * 5,
-      max: 5,
+      max: 30,
       message: {error: "Rate limit exceeded, try again later"}
     })
   )
