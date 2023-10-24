@@ -69,6 +69,7 @@ class PostController {
  }
 
  getPosts(req, res) {
+  
   const schema = Joi.object({
     limit: Joi.number().min(1).max(50),
     page: Joi.number().min(1)
@@ -89,6 +90,7 @@ class PostController {
    .catch((error) => {
     res.status(error.statusCode).json({ msg: error.message });
    });
+
  }
 
  search(req, res){

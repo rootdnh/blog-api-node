@@ -2,12 +2,15 @@ import HandleError from "../error/handleError.js";
 import postModel from "../db/models/postModel.js";
 import userModel from "../db/models/userModel.js";
 import categoryModel from "../db/models/categoryModel.js";
+import RedisController from "../db/redis/RedisController.js";
 import { Sequelize } from "sequelize";
 import { skipCalc } from "../utils/skipCalc.js";
+import { Posts } from "../db/redis/redisKeys.js";
 import slugify from "slugify";
 
 class PostRepository {
  constructor() {
+  this.redisClient = RedisController.client;
   this.initialize();
  }
 
@@ -129,6 +132,11 @@ class PostRepository {
 
  async get(limit = 5, page = 1) {
   try {
+   const redisPostKey = Posts(page, limit);
+   const cachedPosts = await this.redisClient.get(redisPostKey);
+   
+   if(cachedPosts) return JSON.parse(cachedPosts);
+
    const skip =  await skipCalc(limit, page);
 
    const {count, rows: posts} = await postModel.findAndCountAll({
@@ -142,8 +150,15 @@ class PostRepository {
    }
 
    const maxPages = Math.ceil(count / limit);
+ 
+   const response = {
+    maxPages,
+    posts
+   }
 
-   return {maxPages, posts};
+   await this.redisClient.set(redisPostKey, JSON.stringify(response));
+
+   return response;
   } catch (error) {
    if (error instanceof HandleError) throw error;
    throw new HandleError("Error when trying to get all posts", 500, error);
