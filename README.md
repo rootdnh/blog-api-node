@@ -9,7 +9,7 @@
 ```
 sudo docker run --name blog-api-node \
 -e POSTGRES_USER=blog-api-user \
--e POSTGRES_PASSWORD=youtpass \
+-e POSTGRES_PASSWORD=yourpass \
 -e POSTGRES_DB=blog-api \
 -p 5432:5432 \
 -d postgres
