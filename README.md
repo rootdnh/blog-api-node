@@ -9,7 +9,7 @@
 ```
 sudo docker run --name blog-api-node \
 -e POSTGRES_USER=blog-api-user \
--e POSTGRES_PASSWORD=mysecretpass \
+-e POSTGRES_PASSWORD=youtpass \
 -e POSTGRES_DB=blog-api \
 -p 5432:5432 \
 -d postgres
@@ -18,7 +18,7 @@ sudo docker run --name blog-api-node \
 * Redis
 
 ```
-  sudo docker run --name blog-redis -p 6379:6379 -d redis
+   sudo docker run --name redis-blog -p 6378:6379 -d redis --requirepass "yourpass"
 ```
 
 * Dev version (written here to help)
@@ -26,7 +26,7 @@ sudo docker run --name blog-api-node \
 ```
 sudo docker run --name blog-api-dev \
 -e POSTGRES_USER=blog-api-dev \
--e POSTGRES_PASSWORD=mysecretpass \ 
+-e POSTGRES_PASSWORD=yourpass \ 
 -e POSTGRES_DB=blog-api-dev \
 -p 5433:5432 \
  -d postgres
