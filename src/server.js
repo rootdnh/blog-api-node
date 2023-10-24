@@ -14,7 +14,7 @@ import logger from "./logger/loggerConfig.js";
 import PinoHttp from "pino-http";
 import swagger from "swagger-ui-express";
 import swaggerConfig from "./documentation/swaggerConfig.json" assert {type: "json"};
-import { client } from "./db/config/redis-config.js";
+import RedisController from "./db/redis/RedisController.js";
 import rateLimit from "express-rate-limit";
 import RateRedis from "rate-limit-redis";
 
@@ -46,7 +46,7 @@ class Server {
   this.server.use(
     rateLimit({
       store: new RateRedis({
-        sendCommand: (...args) => client.call(...args)
+        sendCommand: (...args) => RedisController.client.call(...args)
       }),
       windowMs: 1000 * 5,
       max: 50,
