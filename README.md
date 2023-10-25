@@ -5,9 +5,20 @@
 ## This project is a complete blog API, with frontend, I hope to help some developers know how they can create something whole.
 
 ### Technologies
- * Redis
+
  * Node
+ * Express
+ * Redis
+ * Helmet
+ * Rate limit
  * Jest
+ * Pino
+ * Logrotate
+ * Jwt
+ * Sequelize
+ * Swagger
+ * Postgres
+ * Docker
 
 ## Steps to run 
 
