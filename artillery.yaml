@@ -1,11 +1,12 @@
 config: 
  target: 'http://localhost:5000'
  phases:
-   - arrivalRate: 5
+   - arrivalRate: 300
      duration: 60
 
 scenarios: 
- - flow: 
+ - name: 'get-posts'
+   flow: 
      - get:
          url: '/get-posts'
  
