@@ -15,10 +15,14 @@
  * Pino
  * Logrotate
  * Jwt
- * Sequelize
+ * Sequelize (Migrations)
  * Swagger
  * Postgres
  * Docker
+ * Bcrypt
+ * Multer
+ * Slugify
+ * Joi
 
 ## Steps to run 
 
