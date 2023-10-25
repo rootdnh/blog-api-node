@@ -2,9 +2,31 @@
 
 (under development)
 
-# Steps to run 
+## This project is a complete blog API, with frontend, I hope to help some developers know how they can create something whole.
 
-* Create postgres container in docker (duplicate this for dev version)
+### Technologies
+
+ * Node
+ * Express
+ * Redis
+ * Helmet
+ * Rate limit
+ * Jest
+ * Pino
+ * Logrotate
+ * Jwt
+ * Sequelize (Migrations)
+ * Swagger
+ * Postgres
+ * Docker
+ * Bcrypt
+ * Multer
+ * Slugify
+ * Joi
+
+## Steps to run 
+
+* Create postgres container in docker.
 
 ```
 sudo docker run --name blog-api-node \
@@ -21,16 +43,6 @@ sudo docker run --name blog-api-node \
    sudo docker run --name redis-blog -p 6378:6379 -d redis --requirepass "yourpass"
 ```
 
-* Dev version (written here to help)
-
-```
-sudo docker run --name blog-api-dev \
--e POSTGRES_USER=blog-api-dev \
--e POSTGRES_PASSWORD=yourpass \ 
--e POSTGRES_DB=blog-api-dev \
--p 5433:5432 \
- -d postgres
-```
 
 * You can test the connection by doing it: 
 ```
