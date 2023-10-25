@@ -2,9 +2,9 @@
 
 (under development)
 
-# This project is a complete blog API, with frontend, I hope to help some developers know how they can create something whole.
+## This project is a complete blog API, with frontend, I hope to help some developers know how they can create something whole.
 
-# Steps to run 
+## Steps to run 
 
 * Create postgres container in docker.
 
