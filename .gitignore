@@ -2,6 +2,7 @@ node_modules
 src/tests/coverage
 src/uploads/
 .env
+.env.dev
 ddagent-install.log
 *.log
 *.gz

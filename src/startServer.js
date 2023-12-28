@@ -2,6 +2,7 @@ import server from "./server.js";
 import logger from "./logger/loggerConfig.js";
 const PORT = process.env.PORT || 5000;
 
+
 server.listen(PORT, ()=>{
   const serverInfo = {
     host: process.env.HOST,

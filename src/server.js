@@ -43,16 +43,18 @@ class Server {
  middlewares() {
   this.server.use(PinoHttp({ logger }));
   this.server.use(express.json());
-  this.server.use(
-    rateLimit({
-      store: new RateRedis({
-        sendCommand: (...args) => RedisController.client.call(...args)
-      }),
-      windowMs: 1000 * 5,
-      max: 50,
-      message: {error: "Rate limit exceeded, try again later"}
-    })
-  )
+  if(process.env.NODE_ENV !== "dev"){
+    this.server.use(
+      rateLimit({
+        store: new RateRedis({
+          sendCommand: (...args) => RedisController.client.call(...args)
+        }),
+        windowMs: 1000 * 5,
+        max: 50,
+        message: {error: "Rate limit exceeded, try again later"}
+      })    
+    )
+  }
   this.server.use(helmet());
   this.server.use("/api-docs", swagger.serve, swagger.setup(swaggerConfig));
   this.server.use(express.urlencoded({extended: true}));
